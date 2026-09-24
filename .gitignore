@@ -1,0 +1,23 @@
+# Build sonuclari
+bin/
+obj/
+*.user
+
+# Visual Studio
+.vs/
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Yayinlama
+publish/
+*.publish.xml
+
+# Veritabani ve resimler (kullanici verisi)
+*.db
+*.db-shm
+*.db-wal
+
+# IDE
+.idea/
+*.swp

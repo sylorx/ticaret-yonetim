@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="TicaretYonetim.Views.AlislarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Margin="24">
+        <TextBlock Text="Alışlar" Style="{StaticResource TitleText}"/>
+
+        <Border Style="{StaticResource CardStyle}">
+            <StackPanel>
+                <TextBlock Text="Yeni Alış Kaydı (Malzeme / Filament / Hammadde)" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Açıklama" FontSize="12" Foreground="Gray"/>
+                        <TextBox Text="{Binding YeniAlis.Aciklama, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Tarih" FontSize="12" Foreground="Gray"/>
+                        <DatePicker SelectedDate="{Binding YeniAlis.Tarih}" Padding="6"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="4">
+                        <TextBlock Text="İlgili Ürün (ops.)" FontSize="12" Foreground="Gray"/>
+                        <ComboBox ItemsSource="{Binding UrunSecenekleri}" DisplayMemberPath="Ad" SelectedValuePath="Id"
+                                  SelectedValue="{Binding YeniAlis.UrunId}" Padding="6"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="6">
+                        <TextBlock Text="Tutar (₺)" FontSize="12" Foreground="Gray"/>
+                        <TextBox Text="{Binding YeniAlis.ToplamTutar, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                    </StackPanel>
+                    <Button Grid.Column="8" Content="Ekle" Command="{Binding EkleCommand}" Style="{StaticResource AccentButtonStyle}"
+                            Padding="16,6" VerticalAlignment="Bottom"/>
+                </Grid>
+                <TextBlock Text="Tedarikçi / Not" FontSize="12" Foreground="Gray" Margin="0,10,0,0"/>
+                <TextBox Text="{Binding YeniAlis.Tedarikci, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+            </StackPanel>
+        </Border>
+
+        <Border Style="{StaticResource CardStyle}">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBlock Text="Başlangıç" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <DatePicker SelectedDate="{Binding Baslangic}" Margin="0,0,20,0"/>
+                    <TextBlock Text="Bitiş" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <DatePicker SelectedDate="{Binding Bitis}"/>
+                </StackPanel>
+                <DataGrid ItemsSource="{Binding Alislar}" SelectedItem="{Binding Secili}" AutoGenerateColumns="False"
+                          IsReadOnly="True" MaxHeight="420" GridLinesVisibility="None">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Tarih" Binding="{Binding Tarih, StringFormat=dd.MM.yyyy HH:mm}" Width="130"/>
+                        <DataGridTextColumn Header="Açıklama" Binding="{Binding Aciklama}" Width="*"/>
+                        <DataGridTextColumn Header="İlgili Ürün" Binding="{Binding Urun.Ad}" Width="140"/>
+                        <DataGridTextColumn Header="Tedarikçi" Binding="{Binding Tedarikci}" Width="140"/>
+                        <DataGridTextColumn Header="Tutar" Binding="{Binding ToplamTutar, StringFormat={}{0:N2} ₺}" Width="110"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button Content="Seçili Kaydı Sil" Command="{Binding SilCommand}" HorizontalAlignment="Right" Margin="0,10,0,0" Padding="12,6"/>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>
