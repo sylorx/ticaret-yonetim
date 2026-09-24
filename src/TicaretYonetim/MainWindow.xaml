@@ -27,6 +27,12 @@
         <DataTemplate DataType="{x:Type vm:FilamentViewModel}">
             <views:FilamentView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AsistanViewModel}">
+            <views:AsistanView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:FiyatlandirmaViewModel}">
+            <views:FiyatlandirmaView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Window.DataContext>
@@ -57,6 +63,10 @@
                              Command="{Binding NavigateCommand}" CommandParameter="Raporlar"/>
                 <RadioButton Style="{StaticResource NavButtonStyle}" Content="🧵  Filamentler"
                              Command="{Binding NavigateCommand}" CommandParameter="Filamentler"/>
+                <RadioButton Style="{StaticResource NavButtonStyle}" Content="🧮  Fiyatlandırma"
+                             Command="{Binding NavigateCommand}" CommandParameter="Fiyatlandirma"/>
+                <RadioButton Style="{StaticResource NavButtonStyle}" Content="🤖  Asistan"
+                             Command="{Binding NavigateCommand}" CommandParameter="Asistan"/>
             </StackPanel>
 
             <Button Content="🌗  Açık / Koyu Tema"

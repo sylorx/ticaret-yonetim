@@ -1,0 +1,177 @@
+<UserControl x:Class="TicaretYonetim.Views.FiyatlandirmaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28">
+            <TextBlock Text="🧮 Fiyatlandırma / Maliyet Hesaplayıcı" Style="{StaticResource TitleText}"/>
+            <TextBlock Text="Filament, elektrik, işçilik ve kar marjını hesaba katarak müşteriye önereceğiniz fiyatı hesaplayın." 
+                       Foreground="{DynamicResource MutedTextBrush}" Margin="0,-10,0,18"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.1*"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Style="{StaticResource CardStyle}" Grid.Column="0">
+                    <StackPanel>
+                        <TextBlock Text="Girdiler" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,12"/>
+
+                        <TextBlock Text="Ürün Seç (filament gramını otomatik doldurur)" Margin="0,0,0,4"/>
+                        <ComboBox ItemsSource="{Binding UrunSecenekleri}" DisplayMemberPath="Ad" SelectedItem="{Binding SeciliUrun}"
+                                  Margin="0,0,0,12" Padding="6"/>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Kullanılacak Filament (gram)" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding FilamentGram, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Filament Fiyatı (₺/kg)" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding FilamentFiyatKg, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Baskı Süresi (saat)" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding BaskiSuresi, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Yazıcı Gücü (W)" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding YaziciGucu, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                                <TextBlock Text="Bambu Lab P1S ≈ 65 W" FontSize="10" Foreground="{DynamicResource MutedTextBrush}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Bilgisayar Gücü (W)" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding BilgisayarGucu, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Elektrik Birim Fiyatı (₺/kWh)" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding ElektrikBirimFiyat, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="İşçilik (₺/saat)" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding IsciSaatUcreti, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Diğer Giderler (₺)" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding DigerGiderler, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Text="Kar Marjı (%)" Margin="0,0,0,4"/>
+                        <TextBox Text="{Binding KarMarji, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                    </StackPanel>
+                </Border>
+
+                <StackPanel Grid.Column="2">
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="Giderler" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,12"/>
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="🧵 Filament" Foreground="{DynamicResource MutedTextBrush}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding FilamentMaliyeti, StringFormat={}{0:N2} ₺}" FontWeight="SemiBold"/>
+                            </Grid>
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="⚡ Elektrik" Foreground="{DynamicResource MutedTextBrush}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding ElektrikMaliyeti, StringFormat={}{0:N2} ₺}" FontWeight="SemiBold"/>
+                            </Grid>
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="🛠 İşçilik" Foreground="{DynamicResource MutedTextBrush}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding IsciMaliyeti, StringFormat={}{0:N2} ₺}" FontWeight="SemiBold"/>
+                            </Grid>
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="📦 Diğer" Foreground="{DynamicResource MutedTextBrush}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding DigerGiderler, StringFormat={}{0:N2} ₺}" FontWeight="SemiBold"/>
+                            </Grid>
+                            <Border Background="#1A000000" CornerRadius="8" Padding="12,10" Margin="0,0,0,4">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Toplam Gider" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding ToplamGider, StringFormat={}{0:N2} ₺}" FontWeight="Bold" Foreground="#C62828"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource CardStyle}" Background="#E8F5E9">
+                        <StackPanel>
+                            <TextBlock Text="💰 Önerilen Müşteri Fiyatı" FontWeight="SemiBold" FontSize="14" Foreground="#2E7D32"/>
+                            <TextBlock Text="{Binding OnerilenFiyat, StringFormat={}{0:N2} ₺}" FontSize="40" FontWeight="Bold" Foreground="#1B5E20" Margin="0,6,0,2"/>
+                            <TextBlock Text="{Binding KarMarji, StringFormat={}%{0:N0} kar marjı ile}" FontSize="12" Foreground="#2E7D32"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="📈 Kârınız" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Kâr Tutarı" Foreground="{DynamicResource MutedTextBrush}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding KarTutari, StringFormat={}{0:N2} ₺}" FontWeight="Bold" Foreground="#2E7D32"/>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Kâr Oranı" Foreground="{DynamicResource MutedTextBrush}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding KarYuzde, StringFormat={}%{0:N1}}" FontWeight="Bold" Foreground="#2E7D32"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

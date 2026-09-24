@@ -1,11 +1,51 @@
 using System.Collections.ObjectModel;
+using System.Windows.Media;
 using TicaretYonetim.Data;
 using TicaretYonetim.Models;
 
 namespace TicaretYonetim.ViewModels;
 
+public class RenkSecenegi
+{
+    public string Ad { get; set; } = string.Empty;
+    public string Hex { get; set; } = "#FFFFFF";
+
+    public Brush Firca
+    {
+        get
+        {
+            try { return new SolidColorBrush((Color)ColorConverter.ConvertFromString(Hex)); }
+            catch { return Brushes.White; }
+        }
+    }
+}
+
 public class FilamentViewModel : ViewModelBase
 {
+    public static readonly List<RenkSecenegi> RenkPaleti = new()
+    {
+        new RenkSecenegi { Ad = "Kırmızı", Hex = "#D32F2F" },
+        new RenkSecenegi { Ad = "Bordo", Hex = "#880E4F" },
+        new RenkSecenegi { Ad = "Turuncu", Hex = "#F57C00" },
+        new RenkSecenegi { Ad = "Sarı", Hex = "#FBC02D" },
+        new RenkSecenegi { Ad = "Altın", Hex = "#FFD54F" },
+        new RenkSecenegi { Ad = "Yeşil", Hex = "#388E3C" },
+        new RenkSecenegi { Ad = "Açık Yeşil", Hex = "#7CB342" },
+        new RenkSecenegi { Ad = "Turkuaz", Hex = "#00897B" },
+        new RenkSecenegi { Ad = "Mavi", Hex = "#1976D2" },
+        new RenkSecenegi { Ad = "Açık Mavi", Hex = "#4FC3F7" },
+        new RenkSecenegi { Ad = "Lacivert", Hex = "#0D47A1" },
+        new RenkSecenegi { Ad = "Mor", Hex = "#7B1FA2" },
+        new RenkSecenegi { Ad = "Pembe", Hex = "#E91E63" },
+        new RenkSecenegi { Ad = "Kahverengi", Hex = "#5D4037" },
+        new RenkSecenegi { Ad = "Bej", Hex = "#D7CCC8" },
+        new RenkSecenegi { Ad = "Beyaz", Hex = "#FAFAFA" },
+        new RenkSecenegi { Ad = "Gri", Hex = "#9E9E9E" },
+        new RenkSecenegi { Ad = "Koyu Gri", Hex = "#424242" },
+        new RenkSecenegi { Ad = "Gümüş", Hex = "#B0BEC5" },
+        new RenkSecenegi { Ad = "Siyah", Hex = "#212121" }
+    };
+
     public ObservableCollection<Filament> Filamentler { get; } = new();
 
     private Filament? _secili;
@@ -41,12 +81,21 @@ public class FilamentViewModel : ViewModelBase
     public RelayCommand YeniCommand { get; }
     public RelayCommand KaydetCommand { get; }
     public RelayCommand SilCommand { get; }
+    public RelayCommand RenkSecCommand { get; }
 
     public FilamentViewModel()
     {
         YeniCommand = new RelayCommand(_ => { Duzenlenen = YeniKayit(); Secili = null; });
         KaydetCommand = new RelayCommand(_ => Kaydet());
         SilCommand = new RelayCommand(_ => Sil(), _ => Secili is not null);
+        RenkSecCommand = new RelayCommand(p =>
+        {
+            if (p is RenkSecenegi renk)
+            {
+                Duzenlenen.Renk = renk.Ad;
+                Bildir(nameof(Duzenlenen));
+            }
+        });
     }
 
     private static Filament YeniKayit() => new() { Ad = string.Empty, Tarih = DateTime.Now };

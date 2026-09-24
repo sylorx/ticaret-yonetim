@@ -10,6 +10,8 @@ public class MainViewModel : ViewModelBase
     public AlislarViewModel AlislarVM { get; } = new();
     public RaporlarViewModel RaporlarVM { get; } = new();
     public FilamentViewModel FilamentVM { get; } = new();
+    public AsistanViewModel AsistanVM { get; } = new();
+    public FiyatlandirmaViewModel FiyatlandirmaVM { get; } = new();
 
     private object _mevcutGorunum;
     public object MevcutGorunum
@@ -91,6 +93,17 @@ public class MainViewModel : ViewModelBase
                 FilamentVM.Yukle();
                 MevcutGorunum = FilamentVM;
                 MevcutBaslik = "Filamentler / Malzeme";
+                break;
+            case "Asistan":
+                AsistanVM.Yukle();
+                _ = AsistanVM.ModelleriYukle();
+                MevcutGorunum = AsistanVM;
+                MevcutBaslik = "Yapay Zeka Asistanı";
+                break;
+            case "Fiyatlandirma":
+                FiyatlandirmaVM.Yukle();
+                MevcutGorunum = FiyatlandirmaVM;
+                MevcutBaslik = "Fiyatlandırma / Maliyet";
                 break;
         }
     }

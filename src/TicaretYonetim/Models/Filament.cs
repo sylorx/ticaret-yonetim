@@ -31,4 +31,22 @@ public class Filament
 
     [NotMapped]
     public decimal KullanimYuzde => ToplamGram > 0 ? (KalanGram / ToplamGram) * 100 : 0;
+
+    [NotMapped]
+    public System.Windows.Media.Brush? RenkFircasi
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(Renk)) return null;
+            var secenek = ViewModels.FilamentViewModel.RenkPaleti.FirstOrDefault(r =>
+                string.Equals(r.Ad, Renk, StringComparison.OrdinalIgnoreCase));
+            if (secenek is not null) return secenek.Firca;
+            try
+            {
+                return new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(Renk));
+            }
+            catch { return null; }
+        }
+    }
 }

@@ -19,6 +19,7 @@ public class AppDbContext : DbContext
     public DbSet<Alis> Alislar => Set<Alis>();
     public DbSet<Satis> Satislar => Set<Satis>();
     public DbSet<Filament> Filamentler => Set<Filament>();
+    public DbSet<SohbetMesaji> SohbetMesajlari => Set<SohbetMesaji>();
 
     public AppDbContext()
     {
@@ -113,6 +114,18 @@ public class AppDbContext : DbContext
                     Tedarikci TEXT,
                     Tarih TEXT NOT NULL,
                     Aktif INTEGER NOT NULL DEFAULT 1
+                );";
+            tablo.ExecuteNonQuery();
+        }
+
+        using (var tablo = baglanti.CreateCommand())
+        {
+            tablo.CommandText = @"
+                CREATE TABLE IF NOT EXISTS SohbetMesajlari (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Rol TEXT NOT NULL,
+                    Icerik TEXT NOT NULL,
+                    Tarih TEXT NOT NULL
                 );";
             tablo.ExecuteNonQuery();
         }
