@@ -10,9 +10,17 @@
                     <ui:ThemeResources.ThemeDictionaries>
                         <ResourceDictionary x:Key="Light">
                             <SolidColorBrush x:Key="AccentButtonBackground" Color="#2E7D32"/>
+                            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F3F5F8"/>
+                            <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FFFFFF"/>
+                            <SolidColorBrush x:Key="CardBorderBrush" Color="#1A000000"/>
+                            <SolidColorBrush x:Key="MutedTextBrush" Color="#6B7280"/>
                         </ResourceDictionary>
                         <ResourceDictionary x:Key="Dark">
                             <SolidColorBrush x:Key="AccentButtonBackground" Color="#43A047"/>
+                            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#12161D"/>
+                            <SolidColorBrush x:Key="CardBackgroundBrush" Color="#1D232C"/>
+                            <SolidColorBrush x:Key="CardBorderBrush" Color="#26FFFFFF"/>
+                            <SolidColorBrush x:Key="MutedTextBrush" Color="#9AA5B4"/>
                         </ResourceDictionary>
                     </ui:ThemeResources.ThemeDictionaries>
                 </ui:ThemeResources>
@@ -36,7 +44,7 @@
             <Style TargetType="TextBlock" x:Key="CardTitle">
                 <Setter Property="FontSize" Value="13"/>
                 <Setter Property="FontWeight" Value="Medium"/>
-                <Setter Property="Foreground" Value="#8A93A3"/>
+                <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
             </Style>
             <Style TargetType="TextBlock" x:Key="CardValue">
                 <Setter Property="FontSize" Value="27"/>
@@ -45,8 +53,8 @@
             </Style>
             <Style TargetType="Border" x:Key="CardStyle">
                 <Setter Property="CornerRadius" Value="14"/>
-                <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
-                <Setter Property="BorderBrush" Value="#14000000"/>
+                <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Padding" Value="20"/>
                 <Setter Property="Margin" Value="0,0,14,14"/>

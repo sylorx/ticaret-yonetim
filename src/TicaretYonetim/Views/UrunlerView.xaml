@@ -35,8 +35,8 @@
                                         <Run Text="  Stok: "/><Run Text="{Binding StokAdedi}"/>
                                     </TextBlock>
                                     <TextBlock Foreground="#2E7D32" FontSize="12" FontWeight="SemiBold">
-                                        <Run Text="Kâr: "/><Run Text="{Binding KarTutari, StringFormat={}{0:N2} ₺}"/>
-                                        <Run Text=" (%"/><Run Text="{Binding KarMarjiYuzde, StringFormat={}{0:N0}}"/><Run Text=")"/>
+                                        <Run Text="Kâr: "/><Run Text="{Binding KarTutari, Mode=OneWay, StringFormat={}{0:N2} ₺}"/>
+                                        <Run Text=" (%"/><Run Text="{Binding KarMarjiYuzde, Mode=OneWay, StringFormat={}{0:N0}}"/><Run Text=")"/>
                                     </TextBlock>
                                 </StackPanel>
                             </Grid>
@@ -91,9 +91,9 @@
                             <TextBlock Text="Kâr Hesabı (Bu Ürün İçin)" FontWeight="SemiBold" FontSize="12" Foreground="#2E7D32"/>
                             <TextBlock Margin="0,4,0,0">
                                 <Run Text="Birim Kâr: " FontWeight="SemiBold"/>
-                                <Run Text="{Binding DuzenlenenUrun.KarTutari, StringFormat={}{0:N2} ₺}" FontWeight="Bold"/>
+                                <Run Text="{Binding DuzenlenenUrun.KarTutari, Mode=OneWay, StringFormat={}{0:N2} ₺}" FontWeight="Bold"/>
                                 <Run Text="  ·  Kâr Marjı: "/>
-                                <Run Text="{Binding DuzenlenenUrun.KarMarjiYuzde, StringFormat={}%{0:N1}}" FontWeight="Bold"/>
+                                <Run Text="{Binding DuzenlenenUrun.KarMarjiYuzde, Mode=OneWay, StringFormat={}%{0:N1}}" FontWeight="Bold"/>
                             </TextBlock>
                             <TextBlock FontSize="11" Foreground="Gray" Margin="0,4,0,0" TextWrapping="Wrap"
                                        Text="Örnek: Malzeme 400 ₺, satış fiyatı 500 ₺ ise kâr 100 ₺ (%20 marj) olarak burada görünür."/>

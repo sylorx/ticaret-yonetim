@@ -63,7 +63,7 @@
             </Grid>
         </Border>
 
-        <Border Grid.Column="1" Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
+        <Border Grid.Column="1" Background="{DynamicResource AppBackgroundBrush}">
             <ContentControl Content="{Binding MevcutGorunum}"/>
         </Border>
     </Grid>

@@ -9,6 +9,14 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
+        DispatcherUnhandledException += (s, ex) =>
+        {
+            MessageBox.Show(
+                "Beklenmeyen bir hata oluştu:\n" + ex.Exception.Message,
+                "Ticaret Yönetim", MessageBoxButton.OK, MessageBoxImage.Warning);
+            ex.Handled = true;
+        };
+
         using var db = new AppDbContext();
         db.SemaGuncelle();
     }

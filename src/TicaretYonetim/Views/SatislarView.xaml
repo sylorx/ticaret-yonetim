@@ -65,7 +65,7 @@
                 <Border Background="#EAF6EC" CornerRadius="8" Padding="10" Margin="0,10,0,0">
                     <TextBlock TextWrapping="Wrap">
                         <Run Text="Bu satış için beklenen kâr: " FontWeight="SemiBold"/>
-                        <Run Text="{Binding TahminiKar, StringFormat={}{0:N2} ₺}" FontWeight="Bold" Foreground="#2E7D32"/>
+                        <Run Text="{Binding TahminiKar, Mode=OneWay, StringFormat={}{0:N2} ₺}" FontWeight="Bold" Foreground="#2E7D32"/>
                         <Run Text="  (Ürünün maliyeti ile satış fiyatı arasındaki fark × adet)" Foreground="Gray" FontSize="11"/>
                     </TextBlock>
                 </Border>
