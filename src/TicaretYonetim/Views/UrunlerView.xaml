@@ -9,7 +9,16 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0">
-            <TextBlock Text="Ürünler / Dijital Katalog" Style="{StaticResource TitleText}"/>
+            <Grid Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Ürünler / Dijital Katalog" Style="{StaticResource TitleText}" VerticalAlignment="Center"/>
+                <Button Grid.Column="1" Content="⬆ CSV İçe Aktar" Command="{Binding IceAktarCommand}"
+                        Padding="10,6" VerticalAlignment="Center"
+                        ToolTip="CSV sütun sırası: Ad;Açıklama;Tür;Kategori;Birim Maliyet;Satış Fiyatı;Stok Adedi"/>
+            </Grid>
             <TextBox Text="{Binding AramaMetni, UpdateSourceTrigger=PropertyChanged}"
                      Margin="0,0,0,12" Padding="8"
                      Tag="Ürün ara..." ToolTip="Ürün adı ile ara"/>

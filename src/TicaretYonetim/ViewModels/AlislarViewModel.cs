@@ -66,6 +66,13 @@ public class AlislarViewModel : ViewModelBase
     private void Sil()
     {
         if (Secili is null) return;
+
+        var sonuc = System.Windows.MessageBox.Show(
+            "Bu alış kaydını silmek istediğinize emin misiniz? Bu işlem geri alınamaz.",
+            "Alışı Sil", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Question,
+            System.Windows.MessageBoxResult.No);
+        if (sonuc != System.Windows.MessageBoxResult.Yes) return;
+
         using var db = new AppDbContext();
         var kayit = db.Alislar.Find(Secili.Id);
         if (kayit is not null)
