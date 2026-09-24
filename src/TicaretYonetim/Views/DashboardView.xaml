@@ -1,12 +1,13 @@
 ﻿<UserControl x:Class="TicaretYonetim.Views.DashboardView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="clr-namespace:TicaretYonetim.ViewModels">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="24">
+             xmlns:vm="clr-namespace:TicaretYonetim.ViewModels"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF">
+    <ScrollViewer x:Name="AnaKaydirici" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="28" Width="{Binding ActualWidth, ElementName=AnaKaydirici}">
             <TextBlock Text="Genel Durum" Style="{StaticResource TitleText}"/>
 
-            <UniformGrid Columns="4" Rows="1">
+            <UniformGrid Columns="3" Rows="1">
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
                         <TextBlock Text="Toplam Satış Cirosu" Style="{StaticResource CardTitle}"/>
@@ -25,12 +26,22 @@
                         <TextBlock Text="{Binding NetKar, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}"/>
                     </StackPanel>
                 </Border>
+            </UniformGrid>
+
+            <UniformGrid Columns="3" Rows="1" Margin="0,4,0,0">
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
                         <TextBlock Text="Bu Ay Satış" Style="{StaticResource CardTitle}"/>
                         <TextBlock Text="{Binding BuAySatis, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}"/>
                     </StackPanel>
                 </Border>
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Ortalama Kâr Marjı" Style="{StaticResource CardTitle}"/>
+                        <TextBlock Text="{Binding OrtalamaKarMarji, StringFormat={}%{0:N1}}" Style="{StaticResource CardValue}" Foreground="#1565C0"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource CardStyle}" Background="Transparent" BorderThickness="0"/>
             </UniformGrid>
 
             <UniformGrid Columns="2" Rows="1" Margin="0,4,0,0">
@@ -48,7 +59,14 @@
                 </Border>
             </UniformGrid>
 
-            <Grid Margin="0,16,0,0">
+            <Border Style="{StaticResource CardStyle}" Margin="0,16,12,12">
+                <StackPanel>
+                    <TextBlock Text="Aylık Kazanç Trendi (Ciro &amp; Kâr — Son 6 Ay)" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
+                    <lvc:CartesianChart Series="{Binding KazancSeries}" XAxes="{Binding KazancXEksen}" Height="280"/>
+                </StackPanel>
+            </Border>
+
+            <Grid Margin="0,4,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1.3*"/>
                     <ColumnDefinition Width="*"/>

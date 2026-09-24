@@ -1,4 +1,6 @@
-﻿namespace TicaretYonetim.Models;
+﻿﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TicaretYonetim.Models;
 
 public class Satis
 {
@@ -20,5 +22,19 @@ public class Satis
 
     public SatisKanali Kanal { get; set; } = SatisKanali.Website;
 
+    public string? SiparisNo { get; set; }
+
     public string? Not { get; set; }
+
+    [NotMapped]
+    public decimal BirimMaliyet => Urun?.BirimMaliyet ?? 0;
+
+    [NotMapped]
+    public decimal BirimKar => BirimFiyat - BirimMaliyet;
+
+    [NotMapped]
+    public decimal ToplamKar => BirimKar * Adet;
+
+    [NotMapped]
+    public decimal KarMarjiYuzde => BirimFiyat > 0 ? (BirimKar / BirimFiyat) * 100 : 0;
 }

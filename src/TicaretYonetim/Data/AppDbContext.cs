@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
 using TicaretYonetim.Models;
 
 namespace TicaretYonetim.Data;
@@ -45,5 +46,43 @@ public class AppDbContext : DbContext
             .WithMany(u => u.Satislar)
             .HasForeignKey(s => s.UrunId)
             .OnDelete(DeleteBehavior.Restrict);
+    }
+
+    /// <summary>
+    /// EnsureCreated ile olusturulmus eski veritabanlarina, yeni eklenen kolonlari
+    /// veri kaybi olmadan ekler.
+    /// </summary>
+    public void SemaGuncelle()
+    {
+        Database.EnsureCreated();
+
+        using var baglanti = new SqliteConnection($"Data Source={VeriTabaniYolu}");
+        baglanti.Open();
+
+        void KolonEkle(string tablo, string kolon, string tip)
+        {
+            using var kontrol = baglanti.CreateCommand();
+            kontrol.CommandText = $"PRAGMA table_info({tablo});";
+            using var okuyucu = kontrol.ExecuteReader();
+            var varMi = false;
+            while (okuyucu.Read())
+            {
+                if (string.Equals(okuyucu.GetString(1), kolon, StringComparison.OrdinalIgnoreCase))
+                {
+                    varMi = true;
+                    break;
+                }
+            }
+            okuyucu.Close();
+
+            if (!varMi)
+            {
+                using var ekle = baglanti.CreateCommand();
+                ekle.CommandText = $"ALTER TABLE {tablo} ADD COLUMN {kolon} {tip};";
+                ekle.ExecuteNonQuery();
+            }
+        }
+
+        KolonEkle("Satislar", "SiparisNo", "TEXT");
     }
 }

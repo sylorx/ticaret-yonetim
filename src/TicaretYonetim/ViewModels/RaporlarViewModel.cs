@@ -15,6 +15,7 @@ public class UrunSatisRaporu
     public decimal ToplamCiro { get; set; }
     public decimal ToplamMaliyet { get; set; }
     public decimal Kar => ToplamCiro - ToplamMaliyet;
+    public decimal KarMarjiYuzde => ToplamCiro > 0 ? (Kar / ToplamCiro) * 100 : 0;
 }
 
 public class RaporlarViewModel : ViewModelBase
@@ -35,6 +36,9 @@ public class RaporlarViewModel : ViewModelBase
 
     private decimal _toplamKar;
     public decimal ToplamKar { get => _toplamKar; set => SetField(ref _toplamKar, value); }
+
+    private decimal _ortalamaKarMarji;
+    public decimal OrtalamaKarMarji { get => _ortalamaKarMarji; set => SetField(ref _ortalamaKarMarji, value); }
 
     public RelayCommand DisaAktarCommand { get; }
 
@@ -68,6 +72,7 @@ public class RaporlarViewModel : ViewModelBase
         ToplamCiro = UrunRaporu.Sum(u => u.ToplamCiro);
         ToplamMaliyet = UrunRaporu.Sum(u => u.ToplamMaliyet);
         ToplamKar = ToplamCiro - ToplamMaliyet;
+        OrtalamaKarMarji = ToplamCiro > 0 ? (ToplamKar / ToplamCiro) * 100 : 0;
     }
 
     private void DisaAktar()
@@ -80,10 +85,10 @@ public class RaporlarViewModel : ViewModelBase
         if (dlg.ShowDialog() != true) return;
 
         var sb = new StringBuilder();
-        sb.AppendLine("Ürün;Satılan Adet;Toplam Ciro;Toplam Maliyet;Kâr");
+        sb.AppendLine("Ürün;Satılan Adet;Toplam Ciro;Toplam Maliyet;Kâr;Kâr Marjı (%)");
         foreach (var r in UrunRaporu)
         {
-            sb.AppendLine($"{r.UrunAdi};{r.SatilanAdet};{r.ToplamCiro.ToString(CultureInfo.InvariantCulture)};{r.ToplamMaliyet.ToString(CultureInfo.InvariantCulture)};{r.Kar.ToString(CultureInfo.InvariantCulture)}");
+            sb.AppendLine($"{r.UrunAdi};{r.SatilanAdet};{r.ToplamCiro.ToString(CultureInfo.InvariantCulture)};{r.ToplamMaliyet.ToString(CultureInfo.InvariantCulture)};{r.Kar.ToString(CultureInfo.InvariantCulture)};{r.KarMarjiYuzde.ToString("N1", CultureInfo.InvariantCulture)}");
         }
         File.WriteAllText(dlg.FileName, sb.ToString(), Encoding.UTF8);
     }

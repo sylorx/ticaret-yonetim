@@ -21,10 +21,52 @@ public class SatislarViewModel : ViewModelBase
     public DateTime? Bitis { get => _bitis; set { if (SetField(ref _bitis, value)) Yukle(); } }
 
     private Satis _yeniSatis = YeniKayit();
-    public Satis YeniSatis { get => _yeniSatis; set => SetField(ref _yeniSatis, value); }
+    public Satis YeniSatis
+    {
+        get => _yeniSatis;
+        set { if (SetField(ref _yeniSatis, value)) Bildir(nameof(TahminiKar)); }
+    }
 
     private Satis? _secili;
     public Satis? Secili { get => _secili; set => SetField(ref _secili, value); }
+
+    public int SecilenUrunId
+    {
+        get => YeniSatis.UrunId;
+        set
+        {
+            YeniSatis.UrunId = value;
+            var urun = UrunSecenekleri.FirstOrDefault(u => u.Id == value);
+            if (urun is not null && YeniSatis.BirimFiyat <= 0)
+                YeniSatis.BirimFiyat = urun.SatisFiyati;
+            Bildir(nameof(SecilenUrunId));
+            Bildir(nameof(YeniSatis));
+            Bildir(nameof(TahminiKar));
+        }
+    }
+
+    public int GirilenAdet
+    {
+        get => YeniSatis.Adet;
+        set { YeniSatis.Adet = value; Bildir(nameof(TahminiKar)); }
+    }
+
+    public decimal GirilenBirimFiyat
+    {
+        get => YeniSatis.BirimFiyat;
+        set { YeniSatis.BirimFiyat = value; Bildir(nameof(TahminiKar)); }
+    }
+
+    public decimal TahminiKar
+    {
+        get
+        {
+            var urun = UrunSecenekleri.FirstOrDefault(u => u.Id == YeniSatis.UrunId);
+            if (urun is null) return 0;
+            var birimFiyat = YeniSatis.BirimFiyat > 0 ? YeniSatis.BirimFiyat : urun.SatisFiyati;
+            return (birimFiyat - urun.BirimMaliyet) * Math.Max(YeniSatis.Adet, 0);
+        }
+    }
 
     public RelayCommand EkleCommand { get; }
     public RelayCommand SilCommand { get; }
@@ -76,6 +118,7 @@ public class SatislarViewModel : ViewModelBase
         YeniSatis = YeniKayit();
         Yukle();
         _urunlerVm.Yukle();
+        Bildir(nameof(TahminiKar));
     }
 
     private void Sil()

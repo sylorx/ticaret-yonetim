@@ -10,6 +10,6 @@ public partial class App : Application
         base.OnStartup(e);
 
         using var db = new AppDbContext();
-        db.Database.EnsureCreated();
+        db.SemaGuncelle();
     }
 }

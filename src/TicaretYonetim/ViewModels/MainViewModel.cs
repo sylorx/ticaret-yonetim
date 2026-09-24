@@ -1,4 +1,6 @@
-﻿namespace TicaretYonetim.ViewModels;
+﻿using ModernWpf;
+
+namespace TicaretYonetim.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
@@ -23,12 +25,25 @@ public class MainViewModel : ViewModelBase
     }
 
     public RelayCommand NavigateCommand { get; }
+    public RelayCommand TemaDegistirCommand { get; }
+
+    private bool _koyuTema = true;
+    public bool KoyuTema
+    {
+        get => _koyuTema;
+        set
+        {
+            if (SetField(ref _koyuTema, value))
+                ThemeManager.Current.ApplicationTheme = value ? ApplicationTheme.Dark : ApplicationTheme.Light;
+        }
+    }
 
     public MainViewModel()
     {
         SatislarVM = new SatislarViewModel(UrunlerVM);
         _mevcutGorunum = DashboardVM;
         NavigateCommand = new RelayCommand(p => Git(p as string ?? string.Empty));
+        TemaDegistirCommand = new RelayCommand(() => KoyuTema = !KoyuTema);
         Yenile();
     }
 

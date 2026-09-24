@@ -25,7 +25,7 @@
                     <StackPanel Grid.Column="0">
                         <TextBlock Text="Ürün" FontSize="12" Foreground="Gray"/>
                         <ComboBox ItemsSource="{Binding UrunSecenekleri}" DisplayMemberPath="Ad" SelectedValuePath="Id"
-                                  SelectedValue="{Binding YeniSatis.UrunId}" Padding="6"/>
+                                  SelectedValue="{Binding SecilenUrunId}" Padding="6"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Tarih" FontSize="12" Foreground="Gray"/>
@@ -33,11 +33,11 @@
                     </StackPanel>
                     <StackPanel Grid.Column="4">
                         <TextBlock Text="Adet" FontSize="12" Foreground="Gray"/>
-                        <TextBox Text="{Binding YeniSatis.Adet, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                        <TextBox Text="{Binding GirilenAdet, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
                     </StackPanel>
                     <StackPanel Grid.Column="6">
                         <TextBlock Text="Birim Fiyat (boş=ürün fiyatı)" FontSize="12" Foreground="Gray"/>
-                        <TextBox Text="{Binding YeniSatis.BirimFiyat, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                        <TextBox Text="{Binding GirilenBirimFiyat, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
                     </StackPanel>
                     <StackPanel Grid.Column="8">
                         <TextBlock Text="Kanal" FontSize="12" Foreground="Gray"/>
@@ -46,8 +46,29 @@
                     <Button Grid.Column="10" Content="Ekle" Command="{Binding EkleCommand}" Style="{StaticResource AccentButtonStyle}"
                             Padding="16,6" VerticalAlignment="Bottom"/>
                 </Grid>
-                <TextBlock Text="Müşteri / Not" FontSize="12" Foreground="Gray" Margin="0,10,0,0"/>
-                <TextBox Text="{Binding YeniSatis.Musteri, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Müşteri / Not" FontSize="12" Foreground="Gray"/>
+                        <TextBox Text="{Binding YeniSatis.Musteri, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Sipariş / Fiş No (ops.)" FontSize="12" Foreground="Gray"/>
+                        <TextBox Text="{Binding YeniSatis.SiparisNo, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                    </StackPanel>
+                </Grid>
+
+                <Border Background="#EAF6EC" CornerRadius="8" Padding="10" Margin="0,10,0,0">
+                    <TextBlock TextWrapping="Wrap">
+                        <Run Text="Bu satış için beklenen kâr: " FontWeight="SemiBold"/>
+                        <Run Text="{Binding TahminiKar, StringFormat={}{0:N2} ₺}" FontWeight="Bold" Foreground="#2E7D32"/>
+                        <Run Text="  (Ürünün maliyeti ile satış fiyatı arasındaki fark × adet)" Foreground="Gray" FontSize="11"/>
+                    </TextBlock>
+                </Border>
             </StackPanel>
         </Border>
 
@@ -67,8 +88,11 @@
                         <DataGridTextColumn Header="Adet" Binding="{Binding Adet}" Width="70"/>
                         <DataGridTextColumn Header="Birim Fiyat" Binding="{Binding BirimFiyat, StringFormat={}{0:N2} ₺}" Width="110"/>
                         <DataGridTextColumn Header="Toplam" Binding="{Binding ToplamTutar, StringFormat={}{0:N2} ₺}" Width="110"/>
+                        <DataGridTextColumn Header="Toplam Kâr" Binding="{Binding ToplamKar, StringFormat={}{0:N2} ₺}" Width="110"/>
+                        <DataGridTextColumn Header="Kâr Marjı" Binding="{Binding KarMarjiYuzde, StringFormat={}%{0:N0}}" Width="90"/>
                         <DataGridTextColumn Header="Kanal" Binding="{Binding Kanal}" Width="140"/>
-                        <DataGridTextColumn Header="Müşteri" Binding="{Binding Musteri}" Width="140"/>
+                        <DataGridTextColumn Header="Müşteri" Binding="{Binding Musteri}" Width="120"/>
+                        <DataGridTextColumn Header="Sipariş No" Binding="{Binding SiparisNo}" Width="110"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <Button Content="Seçili Kaydı Sil" Command="{Binding SilCommand}" HorizontalAlignment="Right" Margin="0,10,0,0" Padding="12,6"/>

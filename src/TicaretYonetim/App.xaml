@@ -20,44 +20,76 @@
             </ResourceDictionary.MergedDictionaries>
 
             <SolidColorBrush x:Key="AccentBrush" Color="#2E7D32"/>
+            <SolidColorBrush x:Key="AccentBrushLight" Color="#43A047"/>
+            <SolidColorBrush x:Key="SidebarBrush" Color="#151B24"/>
+            <SolidColorBrush x:Key="SidebarHoverBrush" Color="#1F2733"/>
+
+            <Style TargetType="{x:Type Control}" x:Key="{x:Type Control}">
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+            </Style>
+
             <Style TargetType="TextBlock" x:Key="TitleText">
-                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="FontSize" Value="26"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
-                <Setter Property="Margin" Value="0,0,0,16"/>
+                <Setter Property="Margin" Value="0,0,0,20"/>
             </Style>
             <Style TargetType="TextBlock" x:Key="CardTitle">
-                <Setter Property="FontSize" Value="14"/>
-                <Setter Property="Foreground" Value="Gray"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="Foreground" Value="#8A93A3"/>
             </Style>
             <Style TargetType="TextBlock" x:Key="CardValue">
-                <Setter Property="FontSize" Value="26"/>
+                <Setter Property="FontSize" Value="27"/>
                 <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Margin" Value="0,4,0,0"/>
             </Style>
             <Style TargetType="Border" x:Key="CardStyle">
-                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="CornerRadius" Value="14"/>
                 <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
-                <Setter Property="Padding" Value="18"/>
-                <Setter Property="Margin" Value="0,0,12,12"/>
+                <Setter Property="BorderBrush" Value="#14000000"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="Margin" Value="0,0,14,14"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="#000000" Opacity="0.08" BlurRadius="16" ShadowDepth="3" Direction="270"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="Button" x:Key="AccentButtonStyle" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="ui:ControlHelper.CornerRadius" Value="8"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{StaticResource AccentBrushLight}"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
             <Style TargetType="RadioButton" x:Key="NavButtonStyle">
-                <Setter Property="Foreground" Value="#C7D1DC"/>
+                <Setter Property="Foreground" Value="#9FACC2"/>
                 <Setter Property="FontSize" Value="15"/>
-                <Setter Property="Padding" Value="20,14"/>
+                <Setter Property="Padding" Value="22,13"/>
+                <Setter Property="Margin" Value="12,3"/>
                 <Setter Property="Cursor" Value="Hand"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="RadioButton">
-                            <Border x:Name="Root" Background="Transparent" Padding="{TemplateBinding Padding}">
+                            <Border x:Name="Root" Background="Transparent" CornerRadius="8" Padding="{TemplateBinding Padding}">
                                 <ContentPresenter VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsChecked" Value="True">
-                                    <Setter TargetName="Root" Property="Background" Value="#2E7D32"/>
+                                    <Setter TargetName="Root" Property="Background" Value="{StaticResource AccentBrush}"/>
                                     <Setter Property="Foreground" Value="White"/>
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="Root" Property="Background" Value="#26313F"/>
+                                    <Setter TargetName="Root" Property="Background" Value="{StaticResource SidebarHoverBrush}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

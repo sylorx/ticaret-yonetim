@@ -14,7 +14,7 @@
                     <Button Content="CSV Dışa Aktar" Command="{Binding DisaAktarCommand}" Padding="12,6"/>
                 </StackPanel>
 
-                <UniformGrid Columns="3" Rows="1" Margin="0,0,0,10">
+                <UniformGrid Columns="4" Rows="1" Margin="0,0,0,10">
                     <Border Style="{StaticResource CardStyle}">
                         <StackPanel>
                             <TextBlock Text="Toplam Ciro" Style="{StaticResource CardTitle}"/>
@@ -33,6 +33,12 @@
                             <TextBlock Text="{Binding ToplamKar, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}"/>
                         </StackPanel>
                     </Border>
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="Ortalama Kâr Marjı" Style="{StaticResource CardTitle}"/>
+                            <TextBlock Text="{Binding OrtalamaKarMarji, StringFormat={}%{0:N1}}" Style="{StaticResource CardValue}" Foreground="#1565C0"/>
+                        </StackPanel>
+                    </Border>
                 </UniformGrid>
 
                 <DataGrid ItemsSource="{Binding UrunRaporu}" AutoGenerateColumns="False" IsReadOnly="True"
@@ -43,6 +49,7 @@
                         <DataGridTextColumn Header="Ciro" Binding="{Binding ToplamCiro, StringFormat={}{0:N2} ₺}" Width="120"/>
                         <DataGridTextColumn Header="Maliyet" Binding="{Binding ToplamMaliyet, StringFormat={}{0:N2} ₺}" Width="120"/>
                         <DataGridTextColumn Header="Kâr" Binding="{Binding Kar, StringFormat={}{0:N2} ₺}" Width="120"/>
+                        <DataGridTextColumn Header="Kâr Marjı" Binding="{Binding KarMarjiYuzde, StringFormat={}%{0:N1}}" Width="100"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
