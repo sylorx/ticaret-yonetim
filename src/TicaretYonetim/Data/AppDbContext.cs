@@ -18,6 +18,7 @@ public class AppDbContext : DbContext
     public DbSet<Urun> Urunler => Set<Urun>();
     public DbSet<Alis> Alislar => Set<Alis>();
     public DbSet<Satis> Satislar => Set<Satis>();
+    public DbSet<Filament> Filamentler => Set<Filament>();
 
     public AppDbContext()
     {
@@ -34,6 +35,17 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<Urun>().Property(u => u.BirimMaliyet).HasColumnType("decimal(18,2)");
         modelBuilder.Entity<Urun>().Property(u => u.SatisFiyati).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Urun>().Property(u => u.FilamentGram).HasColumnType("decimal(18,2)");
+
+        modelBuilder.Entity<Filament>().Property(f => f.ToplamGram).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Filament>().Property(f => f.KalanGram).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Filament>().Property(f => f.BirimFiyat).HasColumnType("decimal(18,2)");
+
+        modelBuilder.Entity<Urun>()
+            .HasOne(u => u.Filament)
+            .WithMany(f => f.Urunler)
+            .HasForeignKey(u => u.FilamentId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<Alis>()
             .HasOne(a => a.Urun)
@@ -84,5 +96,25 @@ public class AppDbContext : DbContext
         }
 
         KolonEkle("Satislar", "SiparisNo", "TEXT");
+        KolonEkle("Urunler", "FilamentGram", "REAL");
+        KolonEkle("Urunler", "FilamentId", "INTEGER");
+
+        using (var tablo = baglanti.CreateCommand())
+        {
+            tablo.CommandText = @"
+                CREATE TABLE IF NOT EXISTS Filamentler (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Ad TEXT NOT NULL,
+                    Renk TEXT,
+                    Marka TEXT,
+                    ToplamGram REAL NOT NULL DEFAULT 0,
+                    KalanGram REAL NOT NULL DEFAULT 0,
+                    BirimFiyat REAL NOT NULL DEFAULT 0,
+                    Tedarikci TEXT,
+                    Tarih TEXT NOT NULL,
+                    Aktif INTEGER NOT NULL DEFAULT 1
+                );";
+            tablo.ExecuteNonQuery();
+        }
     }
 }

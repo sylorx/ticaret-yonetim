@@ -42,13 +42,14 @@ public class SatislarViewModel : ViewModelBase
             Bildir(nameof(SecilenUrunId));
             Bildir(nameof(YeniSatis));
             Bildir(nameof(TahminiKar));
+            Bildir(nameof(TahminiFilamentGram));
         }
     }
 
     public int GirilenAdet
     {
         get => YeniSatis.Adet;
-        set { YeniSatis.Adet = value; Bildir(nameof(TahminiKar)); }
+        set { YeniSatis.Adet = value; Bildir(nameof(TahminiKar)); Bildir(nameof(TahminiFilamentGram)); }
     }
 
     public decimal GirilenBirimFiyat
@@ -65,6 +66,16 @@ public class SatislarViewModel : ViewModelBase
             if (urun is null) return 0;
             var birimFiyat = YeniSatis.BirimFiyat > 0 ? YeniSatis.BirimFiyat : urun.SatisFiyati;
             return (birimFiyat - urun.BirimMaliyet) * Math.Max(YeniSatis.Adet, 0);
+        }
+    }
+
+    public decimal TahminiFilamentGram
+    {
+        get
+        {
+            var urun = UrunSecenekleri.FirstOrDefault(u => u.Id == YeniSatis.UrunId);
+            if (urun is null) return 0;
+            return urun.FilamentGram * Math.Max(YeniSatis.Adet, 0);
         }
     }
 
@@ -112,6 +123,16 @@ public class SatislarViewModel : ViewModelBase
 
         urun.StokAdedi = Math.Max(0, urun.StokAdedi - YeniSatis.Adet);
         db.Urunler.Update(urun);
+
+        if (urun.FilamentId is int filamentId && urun.FilamentGram > 0)
+        {
+            var filament = db.Filamentler.Find(filamentId);
+            if (filament is not null)
+            {
+                filament.KalanGram = Math.Max(0, filament.KalanGram - urun.FilamentGram * YeniSatis.Adet);
+                db.Filamentler.Update(filament);
+            }
+        }
 
         db.SaveChanges();
 

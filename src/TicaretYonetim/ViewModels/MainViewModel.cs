@@ -9,6 +9,7 @@ public class MainViewModel : ViewModelBase
     public SatislarViewModel SatislarVM { get; }
     public AlislarViewModel AlislarVM { get; } = new();
     public RaporlarViewModel RaporlarVM { get; } = new();
+    public FilamentViewModel FilamentVM { get; } = new();
 
     private object _mevcutGorunum;
     public object MevcutGorunum
@@ -54,6 +55,7 @@ public class MainViewModel : ViewModelBase
         SatislarVM.Yukle();
         AlislarVM.Yukle();
         RaporlarVM.Yukle();
+        FilamentVM.Yukle();
     }
 
     private void Git(string hedef)
@@ -84,6 +86,11 @@ public class MainViewModel : ViewModelBase
                 RaporlarVM.Yukle();
                 MevcutGorunum = RaporlarVM;
                 MevcutBaslik = "Raporlar";
+                break;
+            case "Filamentler":
+                FilamentVM.Yukle();
+                MevcutGorunum = FilamentVM;
+                MevcutBaslik = "Filamentler / Malzeme";
                 break;
         }
     }

@@ -1,0 +1,142 @@
+<UserControl x:Class="TicaretYonetim.Views.FilamentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="24">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <TextBlock Text="Filamentler / Malzeme Takibi" Style="{StaticResource TitleText}"/>
+
+            <UniformGrid Columns="3" Rows="1" Margin="0,0,0,14">
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Toplam Alınan" Style="{StaticResource CardTitle}"/>
+                        <TextBlock Text="{Binding ToplamGram, StringFormat={}{0:N0} g}" Style="{StaticResource CardValue}" Foreground="#2E7D32"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Kalan" Style="{StaticResource CardTitle}"/>
+                        <TextBlock Text="{Binding KalanGram, StringFormat={}{0:N0} g}" Style="{StaticResource CardValue}" Foreground="#1565C0"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Harcanan" Style="{StaticResource CardTitle}"/>
+                        <TextBlock Text="{Binding HarcananGram, StringFormat={}{0:N0} g}" Style="{StaticResource CardValue}" Foreground="#F9A825"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,12,14">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Genel Kullanım" FontWeight="SemiBold" FontSize="15"/>
+                        <TextBlock Grid.Column="1" Text="{Binding KullanimYuzde, StringFormat={}%{0:N1} harcandı}" Foreground="#F9A825" FontWeight="SemiBold"/>
+                    </Grid>
+                    <ProgressBar Height="10" Margin="0,10,0,0" Minimum="0" Maximum="100"
+                                 Value="{Binding KullanimYuzde, Mode=OneWay}" Foreground="#F9A825" Background="#2A2F38"/>
+                </StackPanel>
+            </Border>
+
+            <ListView ItemsSource="{Binding Filamentler}" SelectedItem="{Binding Secili}" BorderThickness="0" Background="Transparent" MaxHeight="480">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock FontWeight="SemiBold" FontSize="15">
+                                            <Run Text="{Binding Ad}"/>
+                                            <Run Text="{Binding Renk, StringFormat=· {0}}" Foreground="Gray" FontSize="12"/>
+                                        </TextBlock>
+                                        <TextBlock Foreground="Gray" FontSize="12" Margin="0,2,0,0">
+                                            <Run Text="{Binding Marka}"/>
+                                            <Run Text="{Binding Tedarikci, StringFormat=· {0}}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                                        <TextBlock Text="{Binding KalanGram, StringFormat={}{0:N0} g kaldı}" FontWeight="Bold" Foreground="#1565C0" HorizontalAlignment="Right"/>
+                                        <TextBlock Text="{Binding HarcananGram, StringFormat={}{0:N0} g harcandı}" FontSize="11" Foreground="Gray" HorizontalAlignment="Right"/>
+                                    </StackPanel>
+                                </Grid>
+                                <ProgressBar Height="8" Margin="0,10,0,0" Minimum="0" Maximum="100"
+                                             Value="{Binding KullanimYuzde, Mode=OneWay}" Foreground="#F9A825" Background="#2A2F38"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Grid.Column="2">
+            <TextBlock Text="Filament Ekle / Düzenle" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Text="Filament Adı (örn: PLA Kırmızı)" Margin="0,0,0,4"/>
+                    <TextBox Text="{Binding Duzenlenen.Ad, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" Padding="6"/>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Renk" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding Duzenlenen.Renk, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Marka" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding Duzenlenen.Marka, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock Text="Toplam Miktar (gram)" Margin="0,0,0,4"/>
+                    <TextBox Text="{Binding Duzenlenen.ToplamGram, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" Padding="6"/>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Fiyat (₺)" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding Duzenlenen.BirimFiyat, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Tedarikçi" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding Duzenlenen.Tedarikci, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Border Background="#E8F0FE" CornerRadius="8" Padding="12" Margin="0,0,0,16">
+                        <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#1565C0">
+                            <Run Text="💡 " FontWeight="Bold"/>
+                            <Run Text="Satış eklerken ürüne bağlı filament gramı otomatik olarak bu stoktan düşülür. Örn: 1 kg (1000 g) filament aldıysanız, her satışta kullanılan gram kadar kalan miktar azalır."/>
+                        </TextBlock>
+                    </Border>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Yeni" Command="{Binding YeniCommand}" Margin="0,0,8,0" Padding="14,6"/>
+                        <Button Content="Sil" Command="{Binding SilCommand}" Margin="0,0,8,0" Padding="14,6"/>
+                        <Button Content="Kaydet" Command="{Binding KaydetCommand}" Style="{StaticResource AccentButtonStyle}" Padding="14,6"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -9,42 +9,101 @@
 
             <UniformGrid Columns="3" Rows="1">
                 <Border Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock Text="Toplam Satış Cirosu" Style="{StaticResource CardTitle}"/>
-                        <TextBlock Text="{Binding ToplamSatisTutari, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="#2E7D32"/>
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#1B5E20" VerticalAlignment="Center">
+                            <TextBlock Text="💰" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" Margin="14,0,0,0">
+                            <TextBlock Text="Toplam Satış Cirosu" Style="{StaticResource CardTitle}"/>
+                            <TextBlock Text="{Binding ToplamSatisTutari, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="#2E7D32"/>
+                        </StackPanel>
+                    </Grid>
                 </Border>
                 <Border Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock Text="Toplam Alış Gideri" Style="{StaticResource CardTitle}"/>
-                        <TextBlock Text="{Binding ToplamAlisTutari, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="#C62828"/>
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#B71C1C" VerticalAlignment="Center">
+                            <TextBlock Text="🧾" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" Margin="14,0,0,0">
+                            <TextBlock Text="Toplam Alış Gideri" Style="{StaticResource CardTitle}"/>
+                            <TextBlock Text="{Binding ToplamAlisTutari, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="#C62828"/>
+                        </StackPanel>
+                    </Grid>
                 </Border>
                 <Border Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock Text="Net Kâr" Style="{StaticResource CardTitle}"/>
-                        <TextBlock Text="{Binding NetKar, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}"/>
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#0D47A1" VerticalAlignment="Center">
+                            <TextBlock Text="📈" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" Margin="14,0,0,0">
+                            <TextBlock Text="Net Kâr" Style="{StaticResource CardTitle}"/>
+                            <TextBlock Text="{Binding NetKar, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="#1565C0"/>
+                        </StackPanel>
+                    </Grid>
                 </Border>
             </UniformGrid>
 
             <UniformGrid Columns="3" Rows="1" Margin="0,4,0,0">
                 <Border Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock Text="Bu Ay Satış" Style="{StaticResource CardTitle}"/>
-                        <TextBlock Text="{Binding BuAySatis, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}"/>
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#E65100" VerticalAlignment="Center">
+                            <TextBlock Text="📅" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" Margin="14,0,0,0">
+                            <TextBlock Text="Bu Ay Satış" Style="{StaticResource CardTitle}"/>
+                            <TextBlock Text="{Binding BuAySatis, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="#EF6C00"/>
+                        </StackPanel>
+                    </Grid>
                 </Border>
                 <Border Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock Text="Ortalama Kâr Marjı" Style="{StaticResource CardTitle}"/>
-                        <TextBlock Text="{Binding OrtalamaKarMarji, StringFormat={}%{0:N1}}" Style="{StaticResource CardValue}" Foreground="#1565C0"/>
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#4A148C" VerticalAlignment="Center">
+                            <TextBlock Text="🎯" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" Margin="14,0,0,0">
+                            <TextBlock Text="Ortalama Kâr Marjı" Style="{StaticResource CardTitle}"/>
+                            <TextBlock Text="{Binding OrtalamaKarMarji, StringFormat={}%{0:N1}}" Style="{StaticResource CardValue}" Foreground="#8E24AA"/>
+                        </StackPanel>
+                    </Grid>
                 </Border>
-                <Border Style="{StaticResource CardStyle}" Background="Transparent" BorderThickness="0"/>
+                <Border Style="{StaticResource CardStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#00695C" VerticalAlignment="Center">
+                            <TextBlock Text="🧵" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" Margin="14,0,0,0">
+                            <TextBlock Text="Kalan Filament" Style="{StaticResource CardTitle}"/>
+                            <TextBlock Text="{Binding FilamentKalanGram, StringFormat={}{0:N0} g}" Style="{StaticResource CardValue}" Foreground="#00897B"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
             </UniformGrid>
 
-            <UniformGrid Columns="2" Rows="1" Margin="0,4,0,0">
+            <UniformGrid Columns="3" Rows="1" Margin="0,4,0,0">
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
                         <TextBlock Text="Toplam Satılan Adet" Style="{StaticResource CardTitle}"/>
@@ -57,12 +116,30 @@
                         <TextBlock Text="{Binding UrunSayisi}" Style="{StaticResource CardValue}"/>
                     </StackPanel>
                 </Border>
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Filament Çeşidi" Style="{StaticResource CardTitle}"/>
+                        <TextBlock Text="{Binding FilamentCesidi}" Style="{StaticResource CardValue}"/>
+                    </StackPanel>
+                </Border>
             </UniformGrid>
 
             <Border Style="{StaticResource CardStyle}" Margin="0,16,12,12">
                 <StackPanel>
-                    <TextBlock Text="Aylık Kazanç Trendi (Ciro &amp; Kâr — Son 6 Ay)" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
-                    <lvc:CartesianChart Series="{Binding KazancSeries}" XAxes="{Binding KazancXEksen}" Height="280"/>
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Aylık Kazanç Trendi (Ciro · Kâr · Adet — Son 12 Ay)" FontWeight="SemiBold" FontSize="16"/>
+                        <Border Grid.Column="1" Background="#EAF6EC" CornerRadius="10" Padding="10,4">
+                            <TextBlock FontSize="12" Foreground="#2E7D32" FontWeight="SemiBold">
+                                <Run Text="Kâr: "/><Run Text="{Binding NetKar, StringFormat={}{0:N0} ₺}"/>
+                            </TextBlock>
+                        </Border>
+                    </Grid>
+                    <lvc:CartesianChart Series="{Binding KazancSeries}" XAxes="{Binding KazancXEksen}" YAxes="{Binding KazancYEksen}"
+                                        Height="300" LegendPosition="Top"/>
                 </StackPanel>
             </Border>
 
@@ -91,15 +168,22 @@
                 <Border Style="{StaticResource CardStyle}" Grid.Column="1">
                     <StackPanel>
                         <TextBlock Text="Satış Kanalı Dağılımı" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
-                        <ItemsControl ItemsSource="{Binding KanalOzeti}">
+                        <lvc:PieChart Series="{Binding KanalSeries}" Height="200" LegendPosition="Bottom"/>
+                        <ItemsControl ItemsSource="{Binding KanalOzeti}" Margin="0,8,0,0">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,0,0,1" Padding="0,8">
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding Kategori}" FontWeight="SemiBold"/>
-                                            <TextBlock Text="{Binding ToplamSatis, StringFormat={}Ciro: {0:N2} ₺}" Foreground="Gray"/>
-                                            <TextBlock Text="{Binding Adet, StringFormat={}Adet: {0}}" Foreground="Gray"/>
-                                        </StackPanel>
+                                    <Border BorderBrush="#33FFFFFF" BorderThickness="0,0,0,1" Padding="0,8">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Kategori}" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding Adet, StringFormat={}Adet: {0}}" Foreground="Gray" FontSize="11"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="1" Text="{Binding ToplamSatis, StringFormat={}{0:N2} ₺}" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        </Grid>
                                     </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -107,6 +191,27 @@
                     </StackPanel>
                 </Border>
             </Grid>
+
+            <Border Style="{StaticResource CardStyle}" Margin="0,4,12,12">
+                <StackPanel>
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Filament Kullanımı" FontWeight="SemiBold" FontSize="16"/>
+                        <TextBlock Grid.Column="1" FontSize="12" Foreground="Gray">
+                            <Run Text="{Binding FilamentHarcananGram, StringFormat={}{0:N0} g harcandı}"/>
+                            <Run Text=" · "/>
+                            <Run Text="{Binding FilamentKalanGram, StringFormat={}{0:N0} g kaldı}"/>
+                        </TextBlock>
+                    </Grid>
+                    <ProgressBar Height="12" Minimum="0" Maximum="100" Value="{Binding FilamentKullanimYuzde, Mode=OneWay}"
+                                 Foreground="#F9A825" Background="#2A2F38"/>
+                    <TextBlock Margin="0,6,0,0" FontSize="12" Foreground="Gray"
+                               Text="{Binding FilamentKullanimYuzde, StringFormat={}Toplam filamentin %{0:N1} i kullanıldı. Satış yaptıkça ürünlere bağlı filament gramı otomatik düşülür.}"/>
+                </StackPanel>
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

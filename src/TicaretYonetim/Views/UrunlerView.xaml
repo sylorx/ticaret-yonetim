@@ -93,7 +93,24 @@
                     </Grid>
 
                     <TextBlock Text="Stok Adedi" Margin="0,0,0,4"/>
-                    <TextBox Text="{Binding DuzenlenenUrun.StokAdedi, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,16" Padding="6"/>
+                    <TextBox Text="{Binding DuzenlenenUrun.StokAdedi, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" Padding="6"/>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Filament Kullanımı (gram/adet)" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding DuzenlenenUrun.FilamentGram, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Varsayılan Filament" Margin="0,0,0,4"/>
+                            <ComboBox ItemsSource="{Binding FilamentSecenekleri}" DisplayMemberPath="Ad" SelectedValuePath="Id"
+                                      SelectedValue="{Binding DuzenlenenUrun.FilamentId}" Padding="6"/>
+                        </StackPanel>
+                    </Grid>
 
                     <Border Background="#EAF6EC" CornerRadius="8" Padding="12" Margin="0,0,0,16">
                         <StackPanel>

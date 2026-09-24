@@ -53,6 +53,12 @@ public class Urun : INotifyPropertyChanged
 
     public int StokAdedi { get; set; }
 
+    public decimal FilamentGram { get; set; }
+
+    public int? FilamentId { get; set; }
+
+    public Filament? Filament { get; set; }
+
     public string? ResimYolu { get; set; }
 
     public DateTime OlusturmaTarihi { get; set; } = DateTime.Now;

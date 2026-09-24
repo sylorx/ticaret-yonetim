@@ -12,6 +12,7 @@ namespace TicaretYonetim.ViewModels;
 public class UrunlerViewModel : ViewModelBase
 {
     public ObservableCollection<Urun> Urunler { get; } = new();
+    public ObservableCollection<Filament> FilamentSecenekleri { get; } = new();
 
     private string _aramaMetni = string.Empty;
     public string AramaMetni
@@ -67,6 +68,8 @@ public class UrunlerViewModel : ViewModelBase
         BirimMaliyet = u.BirimMaliyet,
         SatisFiyati = u.SatisFiyati,
         StokAdedi = u.StokAdedi,
+        FilamentGram = u.FilamentGram,
+        FilamentId = u.FilamentId,
         ResimYolu = u.ResimYolu,
         OlusturmaTarihi = u.OlusturmaTarihi,
         Aktif = u.Aktif
@@ -75,6 +78,11 @@ public class UrunlerViewModel : ViewModelBase
     public void Yukle()
     {
         using var db = new AppDbContext();
+
+        FilamentSecenekleri.Clear();
+        foreach (var f in db.Filamentler.Where(f => f.Aktif).OrderBy(f => f.Ad).ToList())
+            FilamentSecenekleri.Add(f);
+
         var sorgu = db.Urunler.AsQueryable();
         if (!string.IsNullOrWhiteSpace(AramaMetni))
             sorgu = sorgu.Where(u => u.Ad.Contains(AramaMetni));
