@@ -40,39 +40,128 @@
         </Grid>
 
         <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="0,0,0,12">
-            <ScrollViewer x:Name="SohbetKaydirici" VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Mesajlar}" Margin="4">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Expander Header="⚙️ Ollama Kaynak Ayarları (RAM / GPU / CPU)" IsExpanded="False" Margin="0,0,0,8">
+                    <Border Background="#1A000000" CornerRadius="10" Padding="14" Margin="0,8,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Ollama'nın bilgisayarınızın hangi kaynaklarını ne kadar kullanacağını seçin. Seçimleriniz hatırlanır ve 'Kaydet ve Yeniden Başlat' ile hemen uygulanır."
+                                       Foreground="{DynamicResource MutedTextBrush}" FontSize="12" TextWrapping="Wrap" Margin="0,0,0,12"/>
+
                             <Grid Margin="0,0,0,10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Border x:Name="Balon" MaxWidth="620" CornerRadius="14" Padding="14,10"
-                                        Background="#1D232C" BorderBrush="#26FFFFFF" BorderThickness="1"
-                                        HorizontalAlignment="Left">
-                                    <StackPanel>
-                                        <TextBlock FontSize="11" Foreground="#8FA1B3" FontWeight="SemiBold" Margin="0,0,0,4">
-                                            <Run Text="🤖 Asistan"/>
-                                            <Run Text="{Binding Tarih, StringFormat=· {0:HH:mm}}" Foreground="#5A6B7C"/>
-                                        </TextBlock>
-                                        <TextBlock Text="{Binding Icerik}" TextWrapping="Wrap" FontSize="14"/>
-                                    </StackPanel>
-                                </Border>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="GPU Kullanımı" FontSize="11" Foreground="{DynamicResource MutedTextBrush}"/>
+                                    <ComboBox ItemsSource="{Binding GpuModuSecenekleri}" SelectedItem="{Binding Ayar.GpuModu}" Margin="0,4,0,0"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Bağlam (RAM, token)" FontSize="11" Foreground="{DynamicResource MutedTextBrush}"/>
+                                    <ComboBox ItemsSource="{Binding ContextSecenekleri}" SelectedItem="{Binding Ayar.ContextLength}" Margin="0,4,0,0"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock Text="KV Cache (RAM)" FontSize="11" Foreground="{DynamicResource MutedTextBrush}"/>
+                                    <ComboBox ItemsSource="{Binding KvCacheSecenekleri}" SelectedItem="{Binding Ayar.KvCacheTipi}" Margin="0,4,0,0"/>
+                                </StackPanel>
                             </Grid>
-                            <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding Rol}" Value="user">
-                                    <Setter TargetName="Balon" Property="Grid.Column" Value="1"/>
-                                    <Setter TargetName="Balon" Property="HorizontalAlignment" Value="Right"/>
-                                    <Setter TargetName="Balon" Property="Background" Value="#2E7D32"/>
-                                    <Setter TargetName="Balon" Property="BorderBrush" Value="#43A047"/>
-                                </DataTrigger>
-                            </DataTemplate.Triggers>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Paralel İstek (CPU)" FontSize="11" Foreground="{DynamicResource MutedTextBrush}"/>
+                                    <ComboBox ItemsSource="{Binding ParalelSecenekleri}" SelectedItem="{Binding Ayar.ParalelIstek}" Margin="0,4,0,0"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Aynı Anda Yüklü Model" FontSize="11" Foreground="{DynamicResource MutedTextBrush}"/>
+                                    <ComboBox ItemsSource="{Binding MaxModelSecenekleri}" SelectedItem="{Binding Ayar.MaxYukluModel}" Margin="0,4,0,0"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock Text="Model Bellekte Kalma" FontSize="11" Foreground="{DynamicResource MutedTextBrush}"/>
+                                    <ComboBox ItemsSource="{Binding KeepAliveSecenekleri}" SelectedItem="{Binding Ayar.KeepAlive}" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="GPU'da Ayrılacak VRAM Payı (MB, 0=otomatik)" FontSize="11" Foreground="{DynamicResource MutedTextBrush}"/>
+                                    <ComboBox SelectedItem="{Binding Ayar.GpuOverheadMb}" Margin="0,4,0,0">
+                                        <ComboBoxItem Content="0"/>
+                                        <ComboBoxItem Content="512"/>
+                                        <ComboBoxItem Content="1024"/>
+                                        <ComboBoxItem Content="2048"/>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Model Yükleme Süresi (saniye)" FontSize="11" Foreground="{DynamicResource MutedTextBrush}"/>
+                                    <ComboBox SelectedItem="{Binding Ayar.LoadTimeoutSaniye}" Margin="0,4,0,0">
+                                        <ComboBoxItem Content="300"/>
+                                        <ComboBoxItem Content="600"/>
+                                        <ComboBoxItem Content="900"/>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding AyarDurumu}" Foreground="#2E7D32" FontSize="12" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                <Button Content="💾 Kaydet ve Ollama'yı Yeniden Başlat" Command="{Binding AyarKaydetCommand}"
+                                        Style="{StaticResource AccentButtonStyle}" Padding="14,6"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Expander>
+                <ScrollViewer Grid.Row="1" x:Name="SohbetKaydirici" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Mesajlar}" Margin="4">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border x:Name="Balon" MaxWidth="620" CornerRadius="14" Padding="14,10"
+                                            Background="#1D232C" BorderBrush="#26FFFFFF" BorderThickness="1"
+                                            HorizontalAlignment="Left">
+                                        <StackPanel>
+                                            <TextBlock FontSize="11" Foreground="#8FA1B3" FontWeight="SemiBold" Margin="0,0,0,4">
+                                                <Run Text="🤖 Asistan"/>
+                                                <Run Text="{Binding Tarih, StringFormat=· {0:HH:mm}}" Foreground="#5A6B7C"/>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding Icerik}" TextWrapping="Wrap" FontSize="14"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding Rol}" Value="user">
+                                        <Setter TargetName="Balon" Property="Grid.Column" Value="1"/>
+                                        <Setter TargetName="Balon" Property="HorizontalAlignment" Value="Right"/>
+                                        <Setter TargetName="Balon" Property="Background" Value="#2E7D32"/>
+                                        <Setter TargetName="Balon" Property="BorderBrush" Value="#43A047"/>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
         </Border>
 
         <Grid Grid.Row="2">

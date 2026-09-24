@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using TicaretYonetim.Data;
+using TicaretYonetim.Services;
 
 namespace TicaretYonetim;
 
@@ -19,5 +20,7 @@ public partial class App : Application
 
         using var db = new AppDbContext();
         db.SemaGuncelle();
+
+        OllamaAyarlari.Yukle().Uygula();
     }
 }

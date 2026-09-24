@@ -5,6 +5,7 @@ using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using TicaretYonetim.Data;
 using TicaretYonetim.Models;
+using TicaretYonetim.Services;
 
 namespace TicaretYonetim.ViewModels;
 
@@ -15,6 +16,22 @@ public class AsistanViewModel : ViewModelBase
 
     public ObservableCollection<SohbetMesaji> Mesajlar { get; } = new();
     public ObservableCollection<string> Modeller { get; } = new();
+
+    public OllamaAyarlari Ayar { get; } = OllamaAyarlari.Yukle();
+
+    public string[] GpuModuSecenekleri => OllamaAyarlari.GpuModuSecenekleri;
+    public int[] ContextSecenekleri => OllamaAyarlari.ContextSecenekleri;
+    public string[] KvCacheSecenekleri => OllamaAyarlari.KvCacheSecenekleri;
+    public int[] ParalelSecenekleri => OllamaAyarlari.ParalelSecenekleri;
+    public int[] MaxModelSecenekleri => OllamaAyarlari.MaxModelSecenekleri;
+    public string[] KeepAliveSecenekleri => OllamaAyarlari.KeepAliveSecenekleri;
+
+    private string _ayarDurumu = string.Empty;
+    public string AyarDurumu
+    {
+        get => _ayarDurumu;
+        set => SetField(ref _ayarDurumu, value);
+    }
 
     private string _seciliModel = string.Empty;
     public string SeciliModel
@@ -68,12 +85,25 @@ public class AsistanViewModel : ViewModelBase
     public RelayCommand GonderCommand { get; }
     public RelayCommand TemizleCommand { get; }
     public RelayCommand ModelleriYenileCommand { get; }
+    public RelayCommand AyarKaydetCommand { get; }
 
     public AsistanViewModel()
     {
         GonderCommand = new RelayCommand(async _ => await Gonder(), _ => !MesajGonderiliyor);
         TemizleCommand = new RelayCommand(_ => Temizle());
         ModelleriYenileCommand = new RelayCommand(async _ => await ModelleriYukle());
+        AyarKaydetCommand = new RelayCommand(async _ => await AyarKaydet());
+    }
+
+    private async Task AyarKaydet()
+    {
+        Ayar.Kaydet();
+        Ayar.Uygula();
+        AyarDurumu = "Ayarlar kaydedildi. Ollama yeniden başlatılıyor...";
+        await Task.Run(OllamaAyarlari.OllamaYenidenBaslat);
+        await Task.Delay(3000);
+        await ModelleriYukle();
+        AyarDurumu = $"Ayarlar uygulandı ve Ollama yeniden başlatıldı. ({Ayar.GpuModu}, bağlam {Ayar.ContextLength}, {Ayar.KvCacheTipi})";
     }
 
     public async Task ModelleriYukle()
