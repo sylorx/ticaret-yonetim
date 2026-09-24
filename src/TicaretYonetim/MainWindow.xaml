@@ -6,6 +6,7 @@
         xmlns:views="clr-namespace:TicaretYonetim.Views"
         ui:WindowHelper.UseModernWindowStyle="True"
         Title="Ticaret Yönetim - Satış, Alış ve Katalog Takibi" Height="800" Width="1300"
+        Icon="pack://application:,,,/app.ico"
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
