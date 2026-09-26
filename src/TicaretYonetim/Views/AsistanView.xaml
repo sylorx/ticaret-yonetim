@@ -128,8 +128,13 @@
                         </StackPanel>
                     </Border>
                 </Expander>
-                <ScrollViewer Grid.Row="1" x:Name="SohbetKaydirici" VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Mesajlar}" Margin="4">
+                <ScrollViewer Grid.Row="1" x:Name="SohbetKaydirici" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                    <ItemsControl ItemsSource="{Binding Mesajlar}" Margin="4" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="0,0,0,10">
@@ -171,7 +176,15 @@
                                             <TextBox x:Name="BalonMetni" Text="{Binding Icerik}" IsReadOnly="True" TextWrapping="Wrap"
                                                      FontSize="14" BorderThickness="0" Background="Transparent" Padding="0"
                                                      IsInactiveSelectionHighlightEnabled="True" FocusVisualStyle="{x:Null}"
-                                                     VerticalContentAlignment="Top" VerticalScrollBarVisibility="Disabled"/>
+                                                     VerticalContentAlignment="Top" VerticalScrollBarVisibility="Disabled">
+                                                <TextBox.Style>
+                                                    <Style TargetType="TextBox">
+                                                        <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}"/>
+                                                        <Setter Property="CaretBrush" Value="{DynamicResource AppTextBrush}"/>
+                                                        <Setter Property="SelectionBrush" Value="{DynamicResource AccentBrushLight}"/>
+                                                    </Style>
+                                                </TextBox.Style>
+                                            </TextBox>
                                         </StackPanel>
                                     </Border>
                                 </Grid>

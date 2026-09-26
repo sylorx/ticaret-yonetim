@@ -156,7 +156,7 @@
                     <StackPanel>
                         <TextBlock Text="Son Hareketler" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
                         <DataGrid Style="{StaticResource ModernDataGridStyle}" ItemsSource="{Binding SonHareketler}" AutoGenerateColumns="False"
-                                  IsReadOnly="True" MaxHeight="360" HeadersVisibility="Column" GridLinesVisibility="None">
+                                  IsReadOnly="True" Height="360" HeadersVisibility="Column" GridLinesVisibility="None">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Tür" Binding="{Binding Tur}" Width="70"/>
                                 <DataGridTextColumn Header="Tarih" Binding="{Binding Tarih, StringFormat=dd.MM.yyyy HH:mm}" Width="130"/>

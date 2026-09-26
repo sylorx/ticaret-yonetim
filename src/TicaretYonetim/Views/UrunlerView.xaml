@@ -1,6 +1,10 @@
 ﻿<UserControl x:Class="TicaretYonetim.Views.UrunlerView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:TicaretYonetim.ViewModels">
+    <UserControl.Resources>
+        <vm:KucukResimConverter x:Key="KucukResim"/>
+    </UserControl.Resources>
     <Grid Margin="24">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.4*"/>
@@ -23,7 +27,8 @@
                      Margin="0,0,0,12" Padding="8"
                      Tag="Ürün ara..." ToolTip="Ürün adı ile ara"/>
 
-            <ListView ItemsSource="{Binding Urunler}" SelectedItem="{Binding Secili}" BorderThickness="0" Background="Transparent" MaxHeight="560">
+            <ListView ItemsSource="{Binding Urunler}" SelectedItem="{Binding Secili}" BorderThickness="0" Background="Transparent" Height="560"
+                                 VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.ScrollUnit="Pixel">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8">
@@ -34,7 +39,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Border Width="64" Height="64" CornerRadius="8" ClipToBounds="True" Background="#EEEEEE">
-                                    <Image Source="{Binding ResimYolu}" Stretch="UniformToFill"/>
+                                    <Image Source="{Binding ResimYolu, Converter={StaticResource KucukResim}, ConverterParameter=128}" Stretch="UniformToFill"/>
                                 </Border>
                                 <StackPanel Grid.Column="2">
                                     <TextBlock Text="{Binding Ad}" FontWeight="SemiBold" FontSize="15"/>
@@ -60,7 +65,7 @@
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel>
                     <Border Width="140" Height="140" CornerRadius="10" ClipToBounds="True" Background="#EEEEEE" HorizontalAlignment="Left">
-                        <Image Source="{Binding DuzenlenenUrun.ResimYolu}" Stretch="UniformToFill"/>
+                        <Image Source="{Binding DuzenlenenUrun.ResimYolu, Converter={StaticResource KucukResim}, ConverterParameter=280}" Stretch="UniformToFill"/>
                     </Border>
                     <Button Content="Resim Seç" Command="{Binding ResimSecCommand}" Margin="0,8,0,16" HorizontalAlignment="Left" Padding="10,4"/>
 

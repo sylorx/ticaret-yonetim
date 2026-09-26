@@ -10,14 +10,14 @@
                     <ui:ThemeResources.ThemeDictionaries>
                         <ResourceDictionary x:Key="Light">
                             <SolidColorBrush x:Key="AccentButtonBackground" Color="#2E7D32"/>
-                            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F3F5F8"/>
-                            <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FFFFFF"/>
-                            <SolidColorBrush x:Key="CardBorderBrush" Color="#1A000000"/>
-                            <SolidColorBrush x:Key="MutedTextBrush" Color="#6B7280"/>
-                            <SolidColorBrush x:Key="GridAltBrush" Color="#F7F9FC"/>
+                            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#EDF1EC"/>
+                            <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FAFBF9"/>
+                            <SolidColorBrush x:Key="CardBorderBrush" Color="#22000000"/>
+                            <SolidColorBrush x:Key="MutedTextBrush" Color="#5F6B62"/>
+                            <SolidColorBrush x:Key="GridAltBrush" Color="#F1F4F0"/>
                             <SolidColorBrush x:Key="GridHoverBrush" Color="#142E7D32"/>
                             <SolidColorBrush x:Key="GridSelectedBrush" Color="#222E7D32"/>
-                            <SolidColorBrush x:Key="AppTextBrush" Color="#111827"/>
+                            <SolidColorBrush x:Key="AppTextBrush" Color="#182219"/>
                             <SolidColorBrush x:Key="ChartLabelBrush" Color="#374151"/>
                             <SolidColorBrush x:Key="SuccessBrush" Color="#2E7D32"/>
                             <SolidColorBrush x:Key="InfoBrush" Color="#1565C0"/>

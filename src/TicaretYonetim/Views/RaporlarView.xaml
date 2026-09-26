@@ -42,7 +42,7 @@
                 </UniformGrid>
 
                 <DataGrid Style="{StaticResource ModernDataGridStyle}" ItemsSource="{Binding UrunRaporu}" AutoGenerateColumns="False" IsReadOnly="True"
-                          MaxHeight="420" GridLinesVisibility="None">
+                          Height="420" GridLinesVisibility="None">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Ürün" Binding="{Binding UrunAdi}" Width="*"/>
                         <DataGridTextColumn Header="Satılan Adet" Binding="{Binding SatilanAdet}" Width="120"/>

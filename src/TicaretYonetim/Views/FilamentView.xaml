@@ -48,7 +48,8 @@
                 </StackPanel>
             </Border>
 
-            <ListView ItemsSource="{Binding Filamentler}" SelectedItem="{Binding Secili}" BorderThickness="0" Background="Transparent" MaxHeight="480">
+            <ListView ItemsSource="{Binding Filamentler}" SelectedItem="{Binding Secili}" BorderThickness="0" Background="Transparent" Height="480"
+                                 VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.ScrollUnit="Pixel">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8">

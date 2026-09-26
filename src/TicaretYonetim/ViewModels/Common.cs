@@ -1,8 +1,45 @@
 ﻿using System.ComponentModel;
+using System.Globalization;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace TicaretYonetim.ViewModels;
+
+[ValueConversion(typeof(string), typeof(BitmapImage))]
+public class KucukResimConverter : IValueConverter
+{
+    public static readonly KucukResimConverter Instance = new();
+
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is not string yol || string.IsNullOrWhiteSpace(yol) || !File.Exists(yol))
+            return null;
+
+        try
+        {
+            var genislik = parameter is string s && int.TryParse(s, out var g) ? g : 280;
+            var bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+            bmp.DecodePixelWidth = genislik;
+            bmp.UriSource = new Uri(yol, UriKind.Absolute);
+            bmp.EndInit();
+            bmp.Freeze();
+            return bmp;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        => throw new NotSupportedException();
+}
 
 public abstract class ViewModelBase : INotifyPropertyChanged
 {

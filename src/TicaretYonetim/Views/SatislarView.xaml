@@ -86,7 +86,7 @@
                     <Button Content="✕ Temizle" Command="{Binding FiltreTemizleCommand}" Margin="16,0,0,0" Padding="10,4"/>
                 </StackPanel>
                 <DataGrid Style="{StaticResource ModernDataGridStyle}" ItemsSource="{Binding Satislar}" SelectedItem="{Binding Secili}" AutoGenerateColumns="False"
-                          IsReadOnly="True" MaxHeight="420" GridLinesVisibility="None">
+                          IsReadOnly="True" Height="420" GridLinesVisibility="None">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Tarih" Binding="{Binding Tarih, StringFormat=dd.MM.yyyy HH:mm}" Width="130"/>
                         <DataGridTextColumn Header="Ürün" Binding="{Binding Urun.Ad}" Width="*"/>
