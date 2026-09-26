@@ -1,4 +1,6 @@
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 using TicaretYonetim.Data;
 using TicaretYonetim.Models;
 
@@ -6,39 +8,107 @@ namespace TicaretYonetim.Services;
 
 public static class VeriGirisi
 {
-    public static (bool kaydedildi, string sonuc) KomutuDene(string cevap)
+    public static (bool kaydedildi, string sonuc) KomutuDene(string cevap, string kullaniciMesaji = "")
     {
-        try
+        var sonuclar = new List<string>();
+        foreach (var parca in JsonParcalariBul(cevap))
         {
-            var bas = cevap.IndexOf('{');
-            var son = cevap.LastIndexOf('}');
-            if (bas < 0 || son <= bas) return (false, string.Empty);
-            var json = cevap.Substring(bas, son - bas + 1);
-            using var doc = JsonDocument.Parse(json);
-            var v = doc.RootElement;
-            var islem = Str(v, "islem", "").ToLowerInvariant();
-            if (string.IsNullOrWhiteSpace(islem)) return (false, string.Empty);
-            var uygulamaSonucu = Uygula(v, islem);
-            return (uygulamaSonucu.Length > 0, uygulamaSonucu);
+            try
+            {
+                using var doc = JsonDocument.Parse(parca);
+                var v = doc.RootElement;
+                if (v.ValueKind != JsonValueKind.Object) continue;
+                var islem = IslemAdi(v);
+                if (string.IsNullOrWhiteSpace(islem)) continue;
+                var r = Uygula(v, islem, kullaniciMesaji);
+                if (!string.IsNullOrEmpty(r)) sonuclar.Add(r);
+            }
+            catch { }
         }
-        catch
-        {
-            return (false, string.Empty);
-        }
+        return (sonuclar.Count > 0, string.Join("\n", sonuclar));
     }
 
-    public static string Uygula(JsonElement v, string islem)
+    private static List<string> JsonParcalariBul(string metin)
+    {
+        var liste = new List<string>();
+        var derinlik = 0;
+        var bas = -1;
+        var metinIci = false;
+        var kacis = false;
+        for (var i = 0; i < metin.Length; i++)
+        {
+            var c = metin[i];
+            if (metinIci)
+            {
+                if (kacis) kacis = false;
+                else if (c == '\\') kacis = true;
+                else if (c == '"') metinIci = false;
+                continue;
+            }
+            if (c == '"') { metinIci = true; continue; }
+            if (c == '{')
+            {
+                if (derinlik == 0) bas = i;
+                derinlik++;
+            }
+            else if (c == '}' && derinlik > 0)
+            {
+                derinlik--;
+                if (derinlik == 0 && bas >= 0)
+                {
+                    liste.Add(metin.Substring(bas, i - bas + 1));
+                    bas = -1;
+                }
+            }
+        }
+        return liste;
+    }
+
+    private static string Normallestir(string s) => s
+        .ToLowerInvariant()
+        .Replace('ı', 'i').Replace('ş', 's').Replace('ğ', 'g')
+        .Replace('ü', 'u').Replace('ö', 'o').Replace('ç', 'c');
+
+    private static string IslemAdi(JsonElement v)
+    {
+        foreach (var ad in new[] { "islem", "komut", "eylem", "action", "islem_turu", "veri_turu" })
+        {
+            var s = Str(v, ad, "");
+            if (!string.IsNullOrWhiteSpace(s)) return Normallestir(s);
+        }
+        return "";
+    }
+
+    public static string Uygula(JsonElement v, string islem, string kullaniciMesaji = "")
     {
         try
         {
-            if (islem.Contains("filament"))
-                return FilamentEkle(v);
-            if (islem.Contains("urun"))
-                return UrunEkle(v);
-            if (islem.Contains("satis"))
-                return SatisEkle(v);
-            if (islem.Contains("alis"))
-                return AlisEkle(v);
+            var i = Normallestir(islem);
+            var stokIslemi = i.Contains("stok") && !i.Contains("urun_sil");
+            var silme = !stokIslemi && (i.Contains("sil") || i.Contains("kaldir") || i.Contains("delete") || i.Contains("cikar"));
+            var guncelleme = !silme && (i.Contains("guncelle") || i.Contains("update") || i.Contains("duzenle") || i.Contains("degistir"));
+
+            if (silme)
+            {
+                var kullaniyorMu = Normallestir(kullaniciMesaji);
+                var izinli = kullaniyorMu.Contains("sil") || kullaniyorMu.Contains("kaldir") ||
+                             kullaniyorMu.Contains("cikar") || kullaniyorMu.Contains("iptal") ||
+                             kullaniyorMu.Contains("geri") || string.IsNullOrEmpty(kullaniciMesaji);
+                if (!izinli)
+                    return "⚠️ Silme işlemi için lütfen açıkça 'sil' veya 'kaldır' yazın. Bir şey silinmedi.";
+            }
+
+            var urunIleIlgili = i.Contains("urun") || i.Contains("fiyat") || i.Contains("stok");
+            if (i.Contains("filament"))
+                return silme ? FilamentSil(v) : guncelleme ? FilamentGuncelle(v) : FilamentEkle(v);
+            if (i.Contains("satis") && !i.Contains("fiyat") && !i.Contains("urun"))
+                return silme ? SatisSil(v) : guncelleme ? "⚠️ Satış kaydı güncellenemiyor; silip yeniden ekleyebilirsiniz." : SatisEkle(v);
+            if (i.Contains("alis"))
+                return silme ? AlisSil(v) : guncelleme ? "⚠️ Alış kaydı güncellenemiyor; silip yeniden ekleyebilirsiniz." : AlisEkle(v);
+            if (urunIleIlgili)
+                return silme ? UrunSil(v)
+                    : guncelleme || i.Contains("stok") ? UrunGuncelle(v, i)
+                    : UrunEkle(v);
             return "";
         }
         catch (Exception ex)
@@ -167,6 +237,147 @@ public static class VeriGirisi
         });
         db.SaveChanges();
         return $"✅ Kaydedildi: '{aciklama}' alış kaydı ({tutar:N2} ₺) eklendi. Alışlar sayfasında görebilirsiniz.";
+    }
+
+    private static string UrunBulAd(JsonElement v)
+    {
+        foreach (var ad in new[] { "urun_ad", "urun_adi", "ad", "isim", "urun", "urun_adlari" })
+        {
+            var s = Str(v, ad, "");
+            if (!string.IsNullOrWhiteSpace(s)) return s.Trim();
+        }
+        return "";
+    }
+
+    private static string UrunSil(JsonElement v)
+    {
+        var ad = UrunBulAd(v);
+        using var db = new AppDbContext();
+        var urun = db.Urunler.FirstOrDefault(u => u.Aktif && u.Ad.ToLower().Contains(ad.ToLower()));
+        if (urun is null) return $"⚠️ '{ad}' adında aktif bir ürün bulunamadı.";
+        urun.Aktif = false;
+        db.Urunler.Update(urun);
+        db.SaveChanges();
+        return $"✅ Kaldırıldı: '{urun.Ad}' ürünü artık listede görünmeyecek (geçmiş satışları korunur). İsterseniz Ürünler sayfasından geri getirebilirsiniz.";
+    }
+
+    private static string UrunGuncelle(JsonElement v, string islem = "")
+    {
+        var ad = UrunBulAd(v);
+        using var db = new AppDbContext();
+        var urun = db.Urunler.Where(u => u.Ad.ToLower().Contains(ad.ToLower()))
+            .OrderByDescending(u => u.Aktif).FirstOrDefault();
+        if (urun is null) return $"⚠️ '{ad}' adında bir ürün bulunamadı.";
+
+        var degisen = new List<string>();
+        var maliyet = DecAlias(v, "maliyet", "birim_maliyet");
+        if (maliyet > 0) { urun.BirimMaliyet = maliyet; degisen.Add($"maliyet {maliyet:N2} ₺"); }
+        var satis = DecAlias(v, "satis_fiyati", "fiyat", "satis");
+        if (satis > 0) { urun.SatisFiyati = satis; degisen.Add($"satış fiyatı {satis:N2} ₺"); }
+        var stok = Dec(v, "stok", -1);
+        if (stok >= 0 && v.TryGetProperty("stok", out _))
+        {
+            if (islem.Contains("ekle") || islem.Contains("cikar") || islem.Contains("kaldir"))
+            {
+                var isaret = islem.Contains("cikar") || islem.Contains("kaldir") ? -1 : 1;
+                urun.StokAdedi = Math.Max(0, urun.StokAdedi + (int)stok * isaret);
+                degisen.Add($"stok {urun.StokAdedi}");
+            }
+            else { urun.StokAdedi = (int)stok; degisen.Add($"stok {urun.StokAdedi}"); }
+        }
+        var stokDegisim = Dec(v, "stok_degisim", 0);
+        if (stokDegisim != 0) { urun.StokAdedi = Math.Max(0, urun.StokAdedi + (int)stokDegisim); degisen.Add($"stok {urun.StokAdedi}'e güncellendi"); }
+        var gram = DecAlias(v, "filament_gram", "gram");
+        if (gram > 0) { urun.FilamentGram = gram; degisen.Add($"filament {gram:N0} g"); }
+        var kategori = Str(v, "kategori");
+        if (!string.IsNullOrWhiteSpace(kategori)) { urun.Kategori = kategori; degisen.Add($"kategori {kategori}"); }
+        var aciklama = Str(v, "aciklama");
+        if (!string.IsNullOrWhiteSpace(aciklama)) { urun.Aciklama = aciklama; degisen.Add("açıklama güncellendi"); }
+
+        if (degisen.Count == 0) return $"⚠️ '{urun.Ad}' için güncellenecek alan bulunamadı.";
+        db.Urunler.Update(urun);
+        db.SaveChanges();
+        return $"✅ Güncellendi: '{urun.Ad}' — {string.Join(", ", degisen)}.";
+    }
+
+    private static string FilamentSil(JsonElement v)
+    {
+        var ad = UrunBulAd(v);
+        using var db = new AppDbContext();
+        var q = db.Filamentler.Where(f => f.Aktif);
+        Filament? filament = null;
+        if (!string.IsNullOrWhiteSpace(ad))
+            filament = q.FirstOrDefault(f => f.Ad.ToLower().Contains(ad.ToLower()) ||
+                                             (f.Renk != null && f.Renk.ToLower().Contains(ad.ToLower())));
+        filament ??= q.OrderByDescending(f => f.Id).FirstOrDefault();
+        if (filament is null) return "⚠️ Silinecek aktif filament bulunamadı.";
+        filament.Aktif = false;
+        db.Filamentler.Update(filament);
+        db.SaveChanges();
+        return $"✅ Kaldırıldı: '{filament.Ad}'{(string.IsNullOrWhiteSpace(filament.Renk) ? "" : $" ({filament.Renk})")} filamenti listeden çıkarıldı.";
+    }
+
+    private static string FilamentGuncelle(JsonElement v)
+    {
+        var ad = UrunBulAd(v);
+        using var db = new AppDbContext();
+        var filament = db.Filamentler.FirstOrDefault(f => f.Aktif && (f.Ad.ToLower().Contains(ad.ToLower()) ||
+                                     (f.Renk != null && f.Renk.ToLower().Contains(ad.ToLower()))))
+            ?? db.Filamentler.Where(f => f.Aktif).OrderByDescending(f => f.Id).FirstOrDefault();
+        if (filament is null) return "⚠️ Güncellenecek filament bulunamadı.";
+
+        var degisen = new List<string>();
+        if (v.TryGetProperty("kalan_gram", out _))
+        {
+            var kg = Dec(v, "kalan_gram");
+            filament.KalanGram = kg;
+            degisen.Add($"kalan {kg:N0} g");
+        }
+        var eksilen = Dec(v, "kullanim", 0);
+        if (eksilen > 0) { filament.KalanGram = Math.Max(0, filament.KalanGram - eksilen); degisen.Add($"{eksilen:N0} g düşüldü, kalan {filament.KalanGram:N0} g"); }
+        var renk = Str(v, "renk");
+        if (!string.IsNullOrWhiteSpace(renk)) { filament.Renk = renk; degisen.Add($"renk {renk}"); }
+        var birim = DecAlias(v, "birim_fiyat", "fiyat");
+        if (birim > 0) { filament.BirimFiyat = birim; degisen.Add($"birim fiyat {birim:N2} ₺"); }
+
+        if (degisen.Count == 0) return $"⚠️ '{filament.Ad}' için güncellenecek alan bulunamadı (kalan_gram, kullanim, renk, birim_fiyat verebilirsiniz).";
+        db.Filamentler.Update(filament);
+        db.SaveChanges();
+        return $"✅ Güncellendi: '{filament.Ad}' — {string.Join(", ", degisen)}.";
+    }
+
+    private static string SatisSil(JsonElement v)
+    {
+        var ad = UrunBulAd(v);
+        using var db = new AppDbContext();
+        var q = db.Satislar.Include(s => s.Urun).AsEnumerable();
+        var satis = string.IsNullOrWhiteSpace(ad)
+            ? q.OrderByDescending(s => s.Tarih).FirstOrDefault()
+            : q.OrderByDescending(s => s.Tarih).FirstOrDefault(s => s.Urun?.Ad.ToLower().Contains(ad.ToLower()) == true);
+        if (satis is null) return $"⚠️ '{ad}' için satış kaydı bulunamadı.";
+        var urun = db.Urunler.Find(satis.UrunId);
+        if (urun is not null) { urun.StokAdedi += satis.Adet; db.Urunler.Update(urun); }
+        db.Satislar.Remove(satis);
+        db.SaveChanges();
+        return $"✅ Silindi: {satis.Tarih:dd.MM.yyyy} tarihli '{satis.Urun?.Ad}' x{satis.Adet} ({satis.ToplamTutar:N2} ₺) satışı silindi, stok {satis.Adet} adet geri eklendi.";
+    }
+
+    private static string AlisSil(JsonElement v)
+    {
+        var ad = UrunBulAd(v);
+        var tutar = Dec(v, "tutar", 0);
+        using var db = new AppDbContext();
+        var q = db.Alislar.OrderByDescending(a => a.Tarih).AsEnumerable();
+        Alis? alis = null;
+        if (tutar > 0) alis = q.FirstOrDefault(a => a.ToplamTutar == tutar);
+        if (alis is null && !string.IsNullOrWhiteSpace(ad) && ad != "Alış")
+            alis = q.FirstOrDefault(a => a.Aciklama.ToLower().Contains(ad.ToLower()) ||
+                                         (a.Tedarikci?.ToLower().Contains(ad.ToLower()) ?? false));
+        alis ??= q.FirstOrDefault();
+        if (alis is null) return "⚠️ Silinecek alış kaydı bulunamadı.";
+        db.Alislar.Remove(alis);
+        db.SaveChanges();
+        return $"✅ Silindi: '{alis.Aciklama}' ({alis.ToplamTutar:N2} ₺) alış kaydı silindi.";
     }
 
     private static string Str(JsonElement v, string ad, string varsayilan = "")

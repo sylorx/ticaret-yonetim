@@ -169,10 +169,10 @@ public class AsistanViewModel : ViewModelBase
             Durum = $"{SeciliModel} düşünüyor...";
             var cevap = await OllamaSoru(metin);
 
-            var (kaydedildi, sonuc) = VeriGirisi.KomutuDene(cevap);
+            var (kaydedildi, sonuc) = VeriGirisi.KomutuDene(cevap, metin);
             if (kaydedildi)
             {
-                cevap = sonuc + "\n\n(Bilgiyi programa ben kaydettim — ilgili sayfada görebilirsiniz.)";
+                cevap = sonuc + "\n\n(Bu işlemi programa ben yaptım — ilgili sayfada görebilirsiniz.)";
             }
 
             var asistanMesaji = new SohbetMesaji { Rol = "assistant", Icerik = cevap, Tarih = DateTime.Now };
@@ -270,12 +270,19 @@ public class AsistanViewModel : ViewModelBase
         sb.AppendLine("Sen 'Ticaret Yönetim' adlı 3D baskı işletme takip programının yapay zeka asistanısın.");
         sb.AppendLine("Kullanıcı Türkçe konuşur, sen de Türkçe yanıt ver. Kısa, net ve sayılarla destekli cevaplar ver.");
         sb.AppendLine();
-        sb.AppendLine("ÖNEMLİ - KAYIT PROTOKOLÜ: Senden bir bilgiyi programa GİRMEN istendiğinde (ör. 'filament aldım', 'ürün ekle', 'satış yaptım', 'alış kaydet'), sen kaydedemezsin; bunun yerine programın kaydetmesi için SONA tek bir JSON komutu ekle. Biçim:");
-        sb.AppendLine("Filament: {\"islem\":\"filament_ekle\",\"ad\":\"PLA Siyah\",\"renk\":\"Siyah\",\"marka\":\"\",\"adet\":3,\"gram\":1000,\"toplam_tutar\":400,\"tedarikci\":\"\"}");
-        sb.AppendLine("Ürün: {\"islem\":\"urun_ekle\",\"ad\":\"Kupa\",\"aciklama\":\"\",\"kategori\":\"\",\"tur\":\"Baski3D\",\"maliyet\":100,\"satis\":250,\"stok\":10,\"filament_gram\":50,\"filament\":\"PLA Siyah\"}");
-        sb.AppendLine("Satış: {\"islem\":\"satis_ekle\",\"urun_ad\":\"Kupa\",\"adet\":2,\"birim_fiyat\":250,\"kanal\":\"Website\",\"musteri\":\"\"}");
-        sb.AppendLine("Alış: {\"islem\":\"alis_ekle\",\"aciklama\":\"Malzeme\",\"tutar\":100,\"tedarikci\":\"\"}");
-        sb.AppendLine("Kural: Sadece kullanıcı AÇIKÇA 'gir', 'kaydet', 'ekle', 'yaz' gibi bir kayıt emri verdiğinde JSON üret. Sadece soru sorduysa JSON ÜRETME, veriye bakıp cevapla. JSON'da sayıları tırnaksız yaz. Kullanıcı '3 tane ... 400 tl' dediyse: adet=3, toplam_tutar=400. JSON'u mesajın en sonuna tek satır olarak koy, öncesinde 1-2 cümle Türkçe açıklama yazabilirsin.");
+        sb.AppendLine("SENSIN YAPABİLECEKLERİN — sen bir asistansın ve programın tüm verilerini yönetebilirsin. Kullanıcı bir şey istediğinde sen kaydedemezsin; mesajının SONUNA programın uygulayacağı JSON komutu eklersin, program hemen uygular.");
+        sb.AppendLine("Biçimler (sayıları tırnaksız yaz, alanları bilmediğini boş/0 bırak):");
+        sb.AppendLine("Filament ekle: {\"islem\":\"filament_ekle\",\"ad\":\"PLA Siyah\",\"renk\":\"Siyah\",\"marka\":\"\",\"adet\":3,\"gram\":1000,\"toplam_tutar\":400,\"tedarikci\":\"\"}");
+        sb.AppendLine("Ürün ekle: {\"islem\":\"urun_ekle\",\"ad\":\"Kupa\",\"aciklama\":\"\",\"kategori\":\"\",\"tur\":\"Baski3D\",\"maliyet\":100,\"satis\":250,\"stok\":10,\"filament_gram\":50,\"filament\":\"PLA Siyah\"}");
+        sb.AppendLine("Satış gir: {\"islem\":\"satis_ekle\",\"urun_ad\":\"Kupa\",\"adet\":2,\"birim_fiyat\":250,\"kanal\":\"Website\",\"musteri\":\"\"} (kanal: Website, DijitalKatalog, Baski3DSiparis, Diger)");
+        sb.AppendLine("Alış gir: {\"islem\":\"alis_ekle\",\"aciklama\":\"Malzeme\",\"tutar\":100,\"tedarikci\":\"\"}");
+        sb.AppendLine("Ürün güncelle (fiyat/stok/maliyet/gram değişimi): {\"islem\":\"urun_guncelle\",\"urun_ad\":\"Kupa\",\"satis_fiyati\":300,\"stok\":15,\"maliyet\":120} — sadece değişen alanları yaz.");
+        sb.AppendLine("Ürün kaldir/sil: {\"islem\":\"urun_sil\",\"urun_ad\":\"Kupa\"}");
+        sb.AppendLine("Filament guncelle: {\"islem\":\"filament_guncelle\",\"ad\":\"PLA\",\"gram\":2000,\"toplam_tutar\":300,\"renk\":\"\"}");
+        sb.AppendLine("Filament sil: {\"islem\":\"filament_sil\",\"ad\":\"PLA\",\"renk\":\"\"}");
+        sb.AppendLine("Satır silme: {\"islem\":\"satis_sil\",\"tarih\":\"2026-09-25\",\"urun_ad\":\"Kupa\"} veya {\"islem\":\"satis_sil\",\"tarih\":\"2026-09-25\"} (tarih: YYYY-AA-GG)");
+        sb.AppendLine("Alış silme: {\"islem\":\"alis_sil\",\"tarih\":\"2026-09-25\",\"aciklama\":\"Malzeme\"}");
+        sb.AppendLine("KURALLAR: 1) Kullanıcı 'ekle', 'gir', 'kaydet', 'yaz', 'sildim', 'çıkar', 'değiştir', 'güncelle', 'fiyatını ... yap', 'stok ... oldu' gibi BİR İŞLEM istediğinde MUTLAKA ilgili JSON komutunu üret ve sona tek satır koy. 2) Kullanıcı sadece SORU sorduysa (\"kaç satış var?\", \"kâr ne?\") JSON üretme, aşağıdaki verilerden cevapla. 3) Kullanıcı '3 tane ... 400 TL' dediyse adet=3, toplam_tutar=400. 4) 'fiyatını 300 yap', 'stok 50 oldu' gibi istekler GÜNCELLEME komutudur, yeni kayıt değil. 5) Silme komutu üreteceksen kullanıcının mesajında açıkça sil/kaldır/çıkar/iptal geçmelidir. 6) JSON'dan önce 1-2 cümle Türkçe açıklama yazabilirsin. 7) Emin olmadığın alanı uydurma, boş bırak.");
         sb.AppendLine("Aşağıdaki veriler programın veritabanından alınmış GÜNCEL gerçek verilerdir. Soruları bu verilere göre cevapla:");
         sb.AppendLine();
         sb.AppendLine($"- Toplam satış cirosu: {toplamCiro:N2} ₺");
