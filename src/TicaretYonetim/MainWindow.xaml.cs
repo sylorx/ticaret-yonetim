@@ -13,6 +13,9 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        var calismaAlani = SystemParameters.WorkArea;
+        if (Width > calismaAlani.Width - 40) Width = calismaAlani.Width - 40;
+        if (Height > calismaAlani.Height - 40) Height = calismaAlani.Height - 40;
         var tanimlayici = DependencyPropertyDescriptor.FromProperty(ContentControl.ContentProperty, typeof(ContentControl));
         tanimlayici?.AddValueChanged(Icerik, Icerik_ContentChanged);
     }
