@@ -168,6 +168,13 @@ public class AsistanViewModel : ViewModelBase
         {
             Durum = $"{SeciliModel} düşünüyor...";
             var cevap = await OllamaSoru(metin);
+
+            var (kaydedildi, sonuc) = VeriGirisi.KomutuDene(cevap);
+            if (kaydedildi)
+            {
+                cevap = sonuc + "\n\n(Bilgiyi programa ben kaydettim — ilgili sayfada görebilirsiniz.)";
+            }
+
             var asistanMesaji = new SohbetMesaji { Rol = "assistant", Icerik = cevap, Tarih = DateTime.Now };
             Mesajlar.Add(asistanMesaji);
             Kaydet(asistanMesaji);
@@ -262,6 +269,13 @@ public class AsistanViewModel : ViewModelBase
         var sb = new StringBuilder();
         sb.AppendLine("Sen 'Ticaret Yönetim' adlı 3D baskı işletme takip programının yapay zeka asistanısın.");
         sb.AppendLine("Kullanıcı Türkçe konuşur, sen de Türkçe yanıt ver. Kısa, net ve sayılarla destekli cevaplar ver.");
+        sb.AppendLine();
+        sb.AppendLine("ÖNEMLİ - KAYIT PROTOKOLÜ: Senden bir bilgiyi programa GİRMEN istendiğinde (ör. 'filament aldım', 'ürün ekle', 'satış yaptım', 'alış kaydet'), sen kaydedemezsin; bunun yerine programın kaydetmesi için SONA tek bir JSON komutu ekle. Biçim:");
+        sb.AppendLine("Filament: {\"islem\":\"filament_ekle\",\"ad\":\"PLA Siyah\",\"renk\":\"Siyah\",\"marka\":\"\",\"adet\":3,\"gram\":1000,\"toplam_tutar\":400,\"tedarikci\":\"\"}");
+        sb.AppendLine("Ürün: {\"islem\":\"urun_ekle\",\"ad\":\"Kupa\",\"aciklama\":\"\",\"kategori\":\"\",\"tur\":\"Baski3D\",\"maliyet\":100,\"satis\":250,\"stok\":10,\"filament_gram\":50,\"filament\":\"PLA Siyah\"}");
+        sb.AppendLine("Satış: {\"islem\":\"satis_ekle\",\"urun_ad\":\"Kupa\",\"adet\":2,\"birim_fiyat\":250,\"kanal\":\"Website\",\"musteri\":\"\"}");
+        sb.AppendLine("Alış: {\"islem\":\"alis_ekle\",\"aciklama\":\"Malzeme\",\"tutar\":100,\"tedarikci\":\"\"}");
+        sb.AppendLine("Kural: Sadece kullanıcı AÇIKÇA 'gir', 'kaydet', 'ekle', 'yaz' gibi bir kayıt emri verdiğinde JSON üret. Sadece soru sorduysa JSON ÜRETME, veriye bakıp cevapla. JSON'da sayıları tırnaksız yaz. Kullanıcı '3 tane ... 400 tl' dediyse: adet=3, toplam_tutar=400. JSON'u mesajın en sonuna tek satır olarak koy, öncesinde 1-2 cümle Türkçe açıklama yazabilirsin.");
         sb.AppendLine("Aşağıdaki veriler programın veritabanından alınmış GÜNCEL gerçek verilerdir. Soruları bu verilere göre cevapla:");
         sb.AppendLine();
         sb.AppendLine($"- Toplam satış cirosu: {toplamCiro:N2} ₺");
