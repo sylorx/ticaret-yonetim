@@ -100,7 +100,7 @@ public static class VeriGirisi
         var filamentAdi = Str(v, "filament");
         if (!string.IsNullOrWhiteSpace(filamentAdi))
         {
-            var f = db.Filamentler.FirstOrDefault(f => f.Aktif && f.Ad.Contains(filamentAdi, StringComparison.OrdinalIgnoreCase));
+            var f = db.Filamentler.FirstOrDefault(f => f.Aktif && f.Ad.ToLower().Contains(filamentAdi.ToLower()));
             if (f is not null) urun.FilamentId = f.Id;
         }
         db.Urunler.Add(urun);
@@ -116,7 +116,7 @@ public static class VeriGirisi
         var musteri = Str(v, "musteri");
 
         using var db = new AppDbContext();
-        var urun = db.Urunler.FirstOrDefault(u => u.Aktif && u.Ad.Contains(urunAdi, StringComparison.OrdinalIgnoreCase));
+        var urun = db.Urunler.FirstOrDefault(u => u.Aktif && u.Ad.ToLower().Contains(urunAdi.ToLower()));
         if (urun is null)
             return $"⚠️ '{urunAdi}' adında bir ürün bulunamadı. Önce Ürünler sayfasından ekleyin.";
 
