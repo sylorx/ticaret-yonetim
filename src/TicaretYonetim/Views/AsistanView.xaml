@@ -137,9 +137,9 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Border x:Name="Balon" MaxWidth="620" CornerRadius="14" Padding="14,10"
-                                            Background="#1D232C" BorderBrush="#26FFFFFF" BorderThickness="1"
-                                            HorizontalAlignment="Left">
+                                    <Border x:Name="Balon" MaxWidth="620" CornerRadius="16" Padding="14,10"
+                                            Background="{DynamicResource CardBackgroundBrush}" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1"
+                                            HorizontalAlignment="Left" Effect="{StaticResource CardShadow}">
                                         <StackPanel>
                                             <TextBlock FontSize="11" Foreground="#8FA1B3" FontWeight="SemiBold" Margin="0,0,0,4">
                                                 <Run Text="🤖 Asistan"/>
@@ -153,8 +153,9 @@
                                     <DataTrigger Binding="{Binding Rol}" Value="user">
                                         <Setter TargetName="Balon" Property="Grid.Column" Value="1"/>
                                         <Setter TargetName="Balon" Property="HorizontalAlignment" Value="Right"/>
-                                        <Setter TargetName="Balon" Property="Background" Value="#2E7D32"/>
-                                        <Setter TargetName="Balon" Property="BorderBrush" Value="#43A047"/>
+                                        <Setter TargetName="Balon" Property="Background" Value="{StaticResource AccentGradientBrush}"/>
+                                        <Setter TargetName="Balon" Property="BorderBrush" Value="{StaticResource AccentGradientBrush}"/>
+                                        <Setter TargetName="Balon" Property="Effect" Value="{StaticResource AccentShadow}"/>
                                     </DataTrigger>
                                 </DataTemplate.Triggers>
                             </DataTemplate>

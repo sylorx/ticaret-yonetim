@@ -53,7 +53,7 @@
                     <TextBlock Text="Bitiş" VerticalAlignment="Center" Margin="0,0,8,0"/>
                     <DatePicker SelectedDate="{Binding Bitis}"/>
                 </StackPanel>
-                <DataGrid ItemsSource="{Binding Alislar}" SelectedItem="{Binding Secili}" AutoGenerateColumns="False"
+                <DataGrid Style="{StaticResource ModernDataGridStyle}" ItemsSource="{Binding Alislar}" SelectedItem="{Binding Secili}" AutoGenerateColumns="False"
                           IsReadOnly="True" MaxHeight="420" GridLinesVisibility="None">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Tarih" Binding="{Binding Tarih, StringFormat=dd.MM.yyyy HH:mm}" Width="130"/>

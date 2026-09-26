@@ -14,7 +14,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#1B5E20" VerticalAlignment="Center">
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#2E7D32" VerticalAlignment="Center">
                             <TextBlock Text="💰" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
@@ -29,7 +29,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#B71C1C" VerticalAlignment="Center">
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#C62828" VerticalAlignment="Center">
                             <TextBlock Text="🧾" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
@@ -44,7 +44,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#0D47A1" VerticalAlignment="Center">
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#1565C0" VerticalAlignment="Center">
                             <TextBlock Text="📈" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
@@ -62,7 +62,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#E65100" VerticalAlignment="Center">
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#EF6C00" VerticalAlignment="Center">
                             <TextBlock Text="📅" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
@@ -77,7 +77,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#4A148C" VerticalAlignment="Center">
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#6A1B9A" VerticalAlignment="Center">
                             <TextBlock Text="🎯" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
@@ -92,7 +92,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#00695C" VerticalAlignment="Center">
+                        <Border Width="46" Height="46" CornerRadius="12" Background="#00897B" VerticalAlignment="Center">
                             <TextBlock Text="🧵" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
@@ -152,7 +152,7 @@
                 <Border Style="{StaticResource CardStyle}" Grid.Column="0">
                     <StackPanel>
                         <TextBlock Text="Son Hareketler" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
-                        <DataGrid ItemsSource="{Binding SonHareketler}" AutoGenerateColumns="False"
+                        <DataGrid Style="{StaticResource ModernDataGridStyle}" ItemsSource="{Binding SonHareketler}" AutoGenerateColumns="False"
                                   IsReadOnly="True" MaxHeight="360" HeadersVisibility="Column" GridLinesVisibility="None">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Tür" Binding="{Binding Tur}" Width="70"/>
