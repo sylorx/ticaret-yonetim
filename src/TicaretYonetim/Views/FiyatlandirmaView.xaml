@@ -128,24 +128,24 @@
                                 <TextBlock Text="📦 Diğer" Foreground="{DynamicResource MutedTextBrush}"/>
                                 <TextBlock Grid.Column="1" Text="{Binding DigerGiderler, StringFormat={}{0:N2} ₺}" FontWeight="SemiBold"/>
                             </Grid>
-                            <Border Background="#1A000000" CornerRadius="8" Padding="12,10" Margin="0,0,0,4">
+                            <Border Background="{DynamicResource SoftPanelBrush}" CornerRadius="8" Padding="12,10" Margin="0,0,0,4">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="Toplam Gider" FontWeight="Bold"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding ToplamGider, StringFormat={}{0:N2} ₺}" FontWeight="Bold" Foreground="#C62828"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding ToplamGider, StringFormat={}{0:N2} ₺}" FontWeight="Bold" Foreground="{DynamicResource DangerBrush}"/>
                                 </Grid>
                             </Border>
                         </StackPanel>
                     </Border>
 
-                    <Border Style="{StaticResource CardStyle}" Background="#E8F5E9">
+                    <Border Style="{StaticResource CardStyle}" Background="{DynamicResource PillBackgroundBrush}">
                         <StackPanel>
-                            <TextBlock Text="💰 Önerilen Müşteri Fiyatı" FontWeight="SemiBold" FontSize="14" Foreground="#2E7D32"/>
-                            <TextBlock Text="{Binding OnerilenFiyat, StringFormat={}{0:N2} ₺}" FontSize="40" FontWeight="Bold" Foreground="#1B5E20" Margin="0,6,0,2"/>
-                            <TextBlock Text="{Binding KarMarji, StringFormat={}%{0:N0} kar marjı ile}" FontSize="12" Foreground="#2E7D32"/>
+                            <TextBlock Text="💰 Önerilen Müşteri Fiyatı" FontWeight="SemiBold" FontSize="14" Foreground="{DynamicResource SuccessBrush}"/>
+                            <TextBlock Text="{Binding OnerilenFiyat, StringFormat={}{0:N2} ₺}" FontSize="40" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}" Margin="0,6,0,2"/>
+                            <TextBlock Text="{Binding KarMarji, StringFormat={}%{0:N0} kar marjı ile}" FontSize="12" Foreground="{DynamicResource SuccessBrush}"/>
                         </StackPanel>
                     </Border>
 
@@ -158,7 +158,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="Kâr Tutarı" Foreground="{DynamicResource MutedTextBrush}"/>
-                                <TextBlock Grid.Column="1" Text="{Binding KarTutari, StringFormat={}{0:N2} ₺}" FontWeight="Bold" Foreground="#2E7D32"/>
+                                <TextBlock Grid.Column="1" Text="{Binding KarTutari, StringFormat={}{0:N2} ₺}" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}"/>
                             </Grid>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -166,7 +166,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="Kâr Oranı" Foreground="{DynamicResource MutedTextBrush}"/>
-                                <TextBlock Grid.Column="1" Text="{Binding KarYuzde, StringFormat={}%{0:N1}}" FontWeight="Bold" Foreground="#2E7D32"/>
+                                <TextBlock Grid.Column="1" Text="{Binding KarYuzde, StringFormat={}%{0:N1}}" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}"/>
                             </Grid>
                         </StackPanel>
                     </Border>

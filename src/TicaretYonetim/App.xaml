@@ -17,6 +17,19 @@
                             <SolidColorBrush x:Key="GridAltBrush" Color="#F7F9FC"/>
                             <SolidColorBrush x:Key="GridHoverBrush" Color="#142E7D32"/>
                             <SolidColorBrush x:Key="GridSelectedBrush" Color="#222E7D32"/>
+                            <SolidColorBrush x:Key="AppTextBrush" Color="#111827"/>
+                            <SolidColorBrush x:Key="ChartLabelBrush" Color="#374151"/>
+                            <SolidColorBrush x:Key="SuccessBrush" Color="#2E7D32"/>
+                            <SolidColorBrush x:Key="InfoBrush" Color="#1565C0"/>
+                            <SolidColorBrush x:Key="TealBrush" Color="#00897B"/>
+                            <SolidColorBrush x:Key="DangerBrush" Color="#C62828"/>
+                            <SolidColorBrush x:Key="OrangeBrush" Color="#EF6C00"/>
+                            <SolidColorBrush x:Key="PurpleBrush" Color="#8E24AA"/>
+                            <SolidColorBrush x:Key="AmberBrush" Color="#F9A825"/>
+                            <SolidColorBrush x:Key="PillBackgroundBrush" Color="#EAF6EC"/>
+                            <SolidColorBrush x:Key="InfoPanelBrush" Color="#E8F0FE"/>
+                            <SolidColorBrush x:Key="ProgressTrackBrush" Color="#E1E5EB"/>
+                            <SolidColorBrush x:Key="SoftPanelBrush" Color="#1A000000"/>
                         </ResourceDictionary>
                         <ResourceDictionary x:Key="Dark">
                             <SolidColorBrush x:Key="AccentButtonBackground" Color="#43A047"/>
@@ -27,6 +40,19 @@
                             <SolidColorBrush x:Key="GridAltBrush" Color="#161C25"/>
                             <SolidColorBrush x:Key="GridHoverBrush" Color="#14FFFFFF"/>
                             <SolidColorBrush x:Key="GridSelectedBrush" Color="#3343A047"/>
+                            <SolidColorBrush x:Key="AppTextBrush" Color="#F3F5F8"/>
+                            <SolidColorBrush x:Key="ChartLabelBrush" Color="#9AA5B4"/>
+                            <SolidColorBrush x:Key="SuccessBrush" Color="#66BB6A"/>
+                            <SolidColorBrush x:Key="InfoBrush" Color="#64B5F6"/>
+                            <SolidColorBrush x:Key="TealBrush" Color="#4DB6AC"/>
+                            <SolidColorBrush x:Key="DangerBrush" Color="#EF5350"/>
+                            <SolidColorBrush x:Key="OrangeBrush" Color="#FFA726"/>
+                            <SolidColorBrush x:Key="PurpleBrush" Color="#AB47BC"/>
+                            <SolidColorBrush x:Key="AmberBrush" Color="#FFCA28"/>
+                            <SolidColorBrush x:Key="PillBackgroundBrush" Color="#1E3226"/>
+                            <SolidColorBrush x:Key="InfoPanelBrush" Color="#16233A"/>
+                            <SolidColorBrush x:Key="ProgressTrackBrush" Color="#2A2F38"/>
+                            <SolidColorBrush x:Key="SoftPanelBrush" Color="#1AFFFFFF"/>
                         </ResourceDictionary>
                     </ui:ThemeResources.ThemeDictionaries>
                 </ui:ThemeResources>
@@ -53,6 +79,7 @@
             </Style>
 
             <Style TargetType="TextBlock" x:Key="TitleText">
+                <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}"/>
                 <Setter Property="FontSize" Value="26"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
                 <Setter Property="Margin" Value="0,0,0,20"/>
@@ -63,6 +90,7 @@
                 <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
             </Style>
             <Style TargetType="TextBlock" x:Key="CardValue">
+                <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}"/>
                 <Setter Property="FontSize" Value="27"/>
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="Margin" Value="0,4,0,0"/>
@@ -178,6 +206,13 @@
                             <Setter Property="Padding" Value="8,0"/>
                             <Setter Property="VerticalContentAlignment" Value="Center"/>
                             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}"/>
+                                </Trigger>
+                            </Style.Triggers>
                         </Style>
                     </Setter.Value>
                 </Setter>

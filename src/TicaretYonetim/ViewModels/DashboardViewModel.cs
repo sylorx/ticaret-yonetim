@@ -79,6 +79,13 @@ public class DashboardViewModel : ViewModelBase
     private ISeries[] _kanalSeries = Array.Empty<ISeries>();
     public ISeries[] KanalSeries { get => _kanalSeries; set => SetField(ref _kanalSeries, value); }
 
+    private SolidColorPaint? _etiketPaint;
+    public SolidColorPaint? EtiketPaint { get => _etiketPaint; set => SetField(ref _etiketPaint, value); }
+
+    private static SKColor EtiketRengi() =>
+        ModernWpf.ThemeManager.Current.ApplicationTheme == ModernWpf.ApplicationTheme.Dark
+            ? SKColor.Parse("#9AA5B4") : SKColor.Parse("#374151");
+
     public void Yukle()
     {
         using var db = new AppDbContext();
@@ -202,7 +209,8 @@ public class DashboardViewModel : ViewModelBase
             {
                 Labels = etiketler,
                 LabelsRotation = -35,
-                TextSize = 11
+                TextSize = 11,
+                LabelsPaint = new SolidColorPaint(EtiketRengi())
             }
         };
 
@@ -212,9 +220,13 @@ public class DashboardViewModel : ViewModelBase
             {
                 Labeler = v => v.ToString("N0") + " ₺",
                 TextSize = 11,
-                MinStep = 1
+                MinStep = 1,
+                LabelsPaint = new SolidColorPaint(EtiketRengi()),
+                SeparatorsPaint = new SolidColorPaint(SKColor.Parse("#22808080")) { StrokeThickness = 1 }
             }
         };
+
+        EtiketPaint = new SolidColorPaint(EtiketRengi());
 
         var kanalRenkleri = new[]
         {

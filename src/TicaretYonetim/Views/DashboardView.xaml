@@ -19,7 +19,7 @@
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
                             <TextBlock Text="Toplam Satış Cirosu" Style="{StaticResource CardTitle}"/>
-                            <TextBlock Text="{Binding ToplamSatisTutari, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="#2E7D32"/>
+                            <TextBlock Text="{Binding ToplamSatisTutari, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="{DynamicResource SuccessBrush}"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -34,7 +34,7 @@
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
                             <TextBlock Text="Toplam Alış Gideri" Style="{StaticResource CardTitle}"/>
-                            <TextBlock Text="{Binding ToplamAlisTutari, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="#C62828"/>
+                            <TextBlock Text="{Binding ToplamAlisTutari, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="{DynamicResource DangerBrush}"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -49,7 +49,7 @@
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
                             <TextBlock Text="Net Kâr" Style="{StaticResource CardTitle}"/>
-                            <TextBlock Text="{Binding NetKar, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="#1565C0"/>
+                            <TextBlock Text="{Binding NetKar, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="{DynamicResource InfoBrush}"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -67,7 +67,7 @@
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
                             <TextBlock Text="Bu Ay Satış" Style="{StaticResource CardTitle}"/>
-                            <TextBlock Text="{Binding BuAySatis, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="#EF6C00"/>
+                            <TextBlock Text="{Binding BuAySatis, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="{DynamicResource OrangeBrush}"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -82,7 +82,7 @@
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
                             <TextBlock Text="Ortalama Kâr Marjı" Style="{StaticResource CardTitle}"/>
-                            <TextBlock Text="{Binding OrtalamaKarMarji, StringFormat={}%{0:N1}}" Style="{StaticResource CardValue}" Foreground="#8E24AA"/>
+                            <TextBlock Text="{Binding OrtalamaKarMarji, StringFormat={}%{0:N1}}" Style="{StaticResource CardValue}" Foreground="{DynamicResource PurpleBrush}"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -97,7 +97,7 @@
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
                             <TextBlock Text="Kalan Filament" Style="{StaticResource CardTitle}"/>
-                            <TextBlock Text="{Binding FilamentKalanGram, StringFormat={}{0:N0} g}" Style="{StaticResource CardValue}" Foreground="#00897B"/>
+                            <TextBlock Text="{Binding FilamentKalanGram, StringFormat={}{0:N0} g}" Style="{StaticResource CardValue}" Foreground="{DynamicResource TealBrush}"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -132,13 +132,14 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Aylık Kazanç Trendi (Ciro · Kâr · Adet — Son 12 Ay)" FontWeight="SemiBold" FontSize="16"/>
-                        <Border Grid.Column="1" Background="#EAF6EC" CornerRadius="10" Padding="10,4">
-                            <TextBlock FontSize="12" Foreground="#2E7D32" FontWeight="SemiBold">
+                        <Border Grid.Column="1" Background="{DynamicResource PillBackgroundBrush}" CornerRadius="10" Padding="10,4">
+                            <TextBlock FontSize="12" Foreground="{DynamicResource SuccessBrush}" FontWeight="SemiBold">
                                 <Run Text="Kâr: "/><Run Text="{Binding NetKar, StringFormat={}{0:N0} ₺}"/>
                             </TextBlock>
                         </Border>
                     </Grid>
                     <lvc:CartesianChart Series="{Binding KazancSeries}" XAxes="{Binding KazancXEksen}" YAxes="{Binding KazancYEksen}"
+                                        LegendTextPaint="{Binding EtiketPaint}"
                                         Height="300" LegendPosition="Top"/>
                 </StackPanel>
             </Border>
@@ -168,7 +169,7 @@
                 <Border Style="{StaticResource CardStyle}" Grid.Column="1">
                     <StackPanel>
                         <TextBlock Text="Satış Kanalı Dağılımı" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
-                        <lvc:PieChart Series="{Binding KanalSeries}" Height="200" LegendPosition="Bottom"/>
+                        <lvc:PieChart Series="{Binding KanalSeries}" Height="200" LegendPosition="Bottom" LegendTextPaint="{Binding EtiketPaint}"/>
                         <ItemsControl ItemsSource="{Binding KanalOzeti}" Margin="0,8,0,0">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -180,7 +181,7 @@
                                             </Grid.ColumnDefinitions>
                                             <StackPanel>
                                                 <TextBlock Text="{Binding Kategori}" FontWeight="SemiBold"/>
-                                                <TextBlock Text="{Binding Adet, StringFormat={}Adet: {0}}" Foreground="Gray" FontSize="11"/>
+                                                <TextBlock Text="{Binding Adet, StringFormat={}Adet: {0}}" Foreground="{DynamicResource MutedTextBrush}" FontSize="11"/>
                                             </StackPanel>
                                             <TextBlock Grid.Column="1" Text="{Binding ToplamSatis, StringFormat={}{0:N2} ₺}" FontWeight="Bold" VerticalAlignment="Center"/>
                                         </Grid>
@@ -200,15 +201,15 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Filament Kullanımı" FontWeight="SemiBold" FontSize="16"/>
-                        <TextBlock Grid.Column="1" FontSize="12" Foreground="Gray">
+                        <TextBlock Grid.Column="1" FontSize="12" Foreground="{DynamicResource MutedTextBrush}">
                             <Run Text="{Binding FilamentHarcananGram, StringFormat={}{0:N0} g harcandı}"/>
                             <Run Text=" · "/>
                             <Run Text="{Binding FilamentKalanGram, StringFormat={}{0:N0} g kaldı}"/>
                         </TextBlock>
                     </Grid>
                     <ProgressBar Height="12" Minimum="0" Maximum="100" Value="{Binding FilamentKullanimYuzde, Mode=OneWay}"
-                                 Foreground="#F9A825" Background="#2A2F38"/>
-                    <TextBlock Margin="0,6,0,0" FontSize="12" Foreground="Gray"
+                                 Foreground="{DynamicResource AmberBrush}" Background="{DynamicResource ProgressTrackBrush}"/>
+                    <TextBlock Margin="0,6,0,0" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"
                                Text="{Binding FilamentKullanimYuzde, StringFormat={}Toplam filamentin %{0:N1} i kullanıldı. Satış yaptıkça ürünlere bağlı filament gramı otomatik düşülür.}"/>
                 </StackPanel>
             </Border>

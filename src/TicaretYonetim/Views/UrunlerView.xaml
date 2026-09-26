@@ -38,12 +38,12 @@
                                 </Border>
                                 <StackPanel Grid.Column="2">
                                     <TextBlock Text="{Binding Ad}" FontWeight="SemiBold" FontSize="15"/>
-                                    <TextBlock Text="{Binding Tur}" Foreground="Gray" FontSize="12"/>
-                                    <TextBlock Foreground="Gray" FontSize="12">
+                                    <TextBlock Text="{Binding Tur}" Foreground="{DynamicResource MutedTextBrush}" FontSize="12"/>
+                                    <TextBlock Foreground="{DynamicResource MutedTextBrush}" FontSize="12">
                                         <Run Text="Fiyat: "/><Run Text="{Binding SatisFiyati, StringFormat={}{0:N2} ₺}"/>
                                         <Run Text="  Stok: "/><Run Text="{Binding StokAdedi}"/>
                                     </TextBlock>
-                                    <TextBlock Foreground="#2E7D32" FontSize="12" FontWeight="SemiBold">
+                                    <TextBlock Foreground="{DynamicResource SuccessBrush}" FontSize="12" FontWeight="SemiBold">
                                         <Run Text="Kâr: "/><Run Text="{Binding KarTutari, Mode=OneWay, StringFormat={}{0:N2} ₺}"/>
                                         <Run Text=" (%"/><Run Text="{Binding KarMarjiYuzde, Mode=OneWay, StringFormat={}{0:N0}}"/><Run Text=")"/>
                                     </TextBlock>
@@ -112,16 +112,16 @@
                         </StackPanel>
                     </Grid>
 
-                    <Border Background="#EAF6EC" CornerRadius="8" Padding="12" Margin="0,0,0,16">
+                    <Border Background="{DynamicResource PillBackgroundBrush}" CornerRadius="8" Padding="12" Margin="0,0,0,16">
                         <StackPanel>
-                            <TextBlock Text="Kâr Hesabı (Bu Ürün İçin)" FontWeight="SemiBold" FontSize="12" Foreground="#2E7D32"/>
+                            <TextBlock Text="Kâr Hesabı (Bu Ürün İçin)" FontWeight="SemiBold" FontSize="12" Foreground="{DynamicResource SuccessBrush}"/>
                             <TextBlock Margin="0,4,0,0">
                                 <Run Text="Birim Kâr: " FontWeight="SemiBold"/>
                                 <Run Text="{Binding DuzenlenenUrun.KarTutari, Mode=OneWay, StringFormat={}{0:N2} ₺}" FontWeight="Bold"/>
                                 <Run Text="  ·  Kâr Marjı: "/>
                                 <Run Text="{Binding DuzenlenenUrun.KarMarjiYuzde, Mode=OneWay, StringFormat={}%{0:N1}}" FontWeight="Bold"/>
                             </TextBlock>
-                            <TextBlock FontSize="11" Foreground="Gray" Margin="0,4,0,0" TextWrapping="Wrap"
+                            <TextBlock FontSize="11" Foreground="{DynamicResource MutedTextBrush}" Margin="0,4,0,0" TextWrapping="Wrap"
                                        Text="Örnek: Malzeme 400 ₺, satış fiyatı 500 ₺ ise kâr 100 ₺ (%20 marj) olarak burada görünür."/>
                         </StackPanel>
                     </Border>

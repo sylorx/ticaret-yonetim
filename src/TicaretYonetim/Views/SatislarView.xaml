@@ -23,24 +23,24 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Ürün" FontSize="12" Foreground="Gray"/>
+                        <TextBlock Text="Ürün" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
                         <ComboBox ItemsSource="{Binding UrunSecenekleri}" DisplayMemberPath="Ad" SelectedValuePath="Id"
                                   SelectedValue="{Binding SecilenUrunId}" Padding="6"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Tarih" FontSize="12" Foreground="Gray"/>
+                        <TextBlock Text="Tarih" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
                         <DatePicker SelectedDate="{Binding YeniSatis.Tarih}" Padding="6"/>
                     </StackPanel>
                     <StackPanel Grid.Column="4">
-                        <TextBlock Text="Adet" FontSize="12" Foreground="Gray"/>
+                        <TextBlock Text="Adet" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
                         <TextBox Text="{Binding GirilenAdet, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
                     </StackPanel>
                     <StackPanel Grid.Column="6">
-                        <TextBlock Text="Birim Fiyat (boş=ürün fiyatı)" FontSize="12" Foreground="Gray"/>
+                        <TextBlock Text="Birim Fiyat (boş=ürün fiyatı)" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
                         <TextBox Text="{Binding GirilenBirimFiyat, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
                     </StackPanel>
                     <StackPanel Grid.Column="8">
-                        <TextBlock Text="Kanal" FontSize="12" Foreground="Gray"/>
+                        <TextBlock Text="Kanal" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
                         <ComboBox ItemsSource="{Binding KanalListesi}" SelectedItem="{Binding YeniSatis.Kanal}" Padding="6"/>
                     </StackPanel>
                     <Button Grid.Column="10" Content="Ekle" Command="{Binding EkleCommand}" Style="{StaticResource AccentButtonStyle}"
@@ -53,24 +53,24 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Müşteri / Not" FontSize="12" Foreground="Gray"/>
+                        <TextBlock Text="Müşteri / Not" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
                         <TextBox Text="{Binding YeniSatis.Musteri, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Sipariş / Fiş No (ops.)" FontSize="12" Foreground="Gray"/>
+                        <TextBlock Text="Sipariş / Fiş No (ops.)" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
                         <TextBox Text="{Binding YeniSatis.SiparisNo, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
                     </StackPanel>
                 </Grid>
 
-                <Border Background="#EAF6EC" CornerRadius="8" Padding="10" Margin="0,10,0,0">
+                <Border Background="{DynamicResource PillBackgroundBrush}" CornerRadius="8" Padding="10" Margin="0,10,0,0">
                     <TextBlock TextWrapping="Wrap">
                         <Run Text="Bu satış için beklenen kâr: " FontWeight="SemiBold"/>
-                        <Run Text="{Binding TahminiKar, Mode=OneWay, StringFormat={}{0:N2} ₺}" FontWeight="Bold" Foreground="#2E7D32"/>
-                        <Run Text="  (Ürünün maliyeti ile satış fiyatı arasındaki fark × adet)" Foreground="Gray" FontSize="11"/>
+                        <Run Text="{Binding TahminiKar, Mode=OneWay, StringFormat={}{0:N2} ₺}" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}"/>
+                        <Run Text="  (Ürünün maliyeti ile satış fiyatı arasındaki fark × adet)" Foreground="{DynamicResource MutedTextBrush}" FontSize="11"/>
                         <LineBreak/>
                         <Run Text="🧵 Filament: " FontWeight="SemiBold"/>
-                        <Run Text="{Binding TahminiFilamentGram, Mode=OneWay, StringFormat={}{0:N0} g}" FontWeight="Bold" Foreground="#F9A825"/>
-                        <Run Text="  (satış kaydedilince filament stoğundan otomatik düşülür)" Foreground="Gray" FontSize="11"/>
+                        <Run Text="{Binding TahminiFilamentGram, Mode=OneWay, StringFormat={}{0:N0} g}" FontWeight="Bold" Foreground="{DynamicResource AmberBrush}"/>
+                        <Run Text="  (satış kaydedilince filament stoğundan otomatik düşülür)" Foreground="{DynamicResource MutedTextBrush}" FontSize="11"/>
                     </TextBlock>
                 </Border>
             </StackPanel>

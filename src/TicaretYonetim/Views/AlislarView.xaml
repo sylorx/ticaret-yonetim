@@ -21,26 +21,26 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Açıklama" FontSize="12" Foreground="Gray"/>
+                        <TextBlock Text="Açıklama" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
                         <TextBox Text="{Binding YeniAlis.Aciklama, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Tarih" FontSize="12" Foreground="Gray"/>
+                        <TextBlock Text="Tarih" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
                         <DatePicker SelectedDate="{Binding YeniAlis.Tarih}" Padding="6"/>
                     </StackPanel>
                     <StackPanel Grid.Column="4">
-                        <TextBlock Text="İlgili Ürün (ops.)" FontSize="12" Foreground="Gray"/>
+                        <TextBlock Text="İlgili Ürün (ops.)" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
                         <ComboBox ItemsSource="{Binding UrunSecenekleri}" DisplayMemberPath="Ad" SelectedValuePath="Id"
                                   SelectedValue="{Binding YeniAlis.UrunId}" Padding="6"/>
                     </StackPanel>
                     <StackPanel Grid.Column="6">
-                        <TextBlock Text="Tutar (₺)" FontSize="12" Foreground="Gray"/>
+                        <TextBlock Text="Tutar (₺)" FontSize="12" Foreground="{DynamicResource MutedTextBrush}"/>
                         <TextBox Text="{Binding YeniAlis.ToplamTutar, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
                     </StackPanel>
                     <Button Grid.Column="8" Content="Ekle" Command="{Binding EkleCommand}" Style="{StaticResource AccentButtonStyle}"
                             Padding="16,6" VerticalAlignment="Bottom"/>
                 </Grid>
-                <TextBlock Text="Tedarikçi / Not" FontSize="12" Foreground="Gray" Margin="0,10,0,0"/>
+                <TextBlock Text="Tedarikçi / Not" FontSize="12" Foreground="{DynamicResource MutedTextBrush}" Margin="0,10,0,0"/>
                 <TextBox Text="{Binding YeniAlis.Tedarikci, UpdateSourceTrigger=PropertyChanged}" Padding="6"/>
             </StackPanel>
         </Border>

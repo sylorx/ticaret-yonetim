@@ -18,13 +18,13 @@
                     <Border Style="{StaticResource CardStyle}">
                         <StackPanel>
                             <TextBlock Text="Toplam Ciro" Style="{StaticResource CardTitle}"/>
-                            <TextBlock Text="{Binding ToplamCiro, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="#2E7D32"/>
+                            <TextBlock Text="{Binding ToplamCiro, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="{DynamicResource SuccessBrush}"/>
                         </StackPanel>
                     </Border>
                     <Border Style="{StaticResource CardStyle}">
                         <StackPanel>
                             <TextBlock Text="Toplam Maliyet" Style="{StaticResource CardTitle}"/>
-                            <TextBlock Text="{Binding ToplamMaliyet, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="#C62828"/>
+                            <TextBlock Text="{Binding ToplamMaliyet, StringFormat={}{0:N2} ₺}" Style="{StaticResource CardValue}" Foreground="{DynamicResource DangerBrush}"/>
                         </StackPanel>
                     </Border>
                     <Border Style="{StaticResource CardStyle}">
@@ -36,7 +36,7 @@
                     <Border Style="{StaticResource CardStyle}">
                         <StackPanel>
                             <TextBlock Text="Ortalama Kâr Marjı" Style="{StaticResource CardTitle}"/>
-                            <TextBlock Text="{Binding OrtalamaKarMarji, StringFormat={}%{0:N1}}" Style="{StaticResource CardValue}" Foreground="#1565C0"/>
+                            <TextBlock Text="{Binding OrtalamaKarMarji, StringFormat={}%{0:N1}}" Style="{StaticResource CardValue}" Foreground="{DynamicResource InfoBrush}"/>
                         </StackPanel>
                     </Border>
                 </UniformGrid>

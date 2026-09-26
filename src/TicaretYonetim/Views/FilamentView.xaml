@@ -16,19 +16,19 @@
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
                         <TextBlock Text="Toplam Alınan" Style="{StaticResource CardTitle}"/>
-                        <TextBlock Text="{Binding ToplamGram, StringFormat={}{0:N0} g}" Style="{StaticResource CardValue}" Foreground="#2E7D32"/>
+                        <TextBlock Text="{Binding ToplamGram, StringFormat={}{0:N0} g}" Style="{StaticResource CardValue}" Foreground="{DynamicResource SuccessBrush}"/>
                     </StackPanel>
                 </Border>
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
                         <TextBlock Text="Kalan" Style="{StaticResource CardTitle}"/>
-                        <TextBlock Text="{Binding KalanGram, StringFormat={}{0:N0} g}" Style="{StaticResource CardValue}" Foreground="#1565C0"/>
+                        <TextBlock Text="{Binding KalanGram, StringFormat={}{0:N0} g}" Style="{StaticResource CardValue}" Foreground="{DynamicResource InfoBrush}"/>
                     </StackPanel>
                 </Border>
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
                         <TextBlock Text="Harcanan" Style="{StaticResource CardTitle}"/>
-                        <TextBlock Text="{Binding HarcananGram, StringFormat={}{0:N0} g}" Style="{StaticResource CardValue}" Foreground="#F9A825"/>
+                        <TextBlock Text="{Binding HarcananGram, StringFormat={}{0:N0} g}" Style="{StaticResource CardValue}" Foreground="{DynamicResource AmberBrush}"/>
                     </StackPanel>
                 </Border>
             </UniformGrid>
@@ -41,10 +41,10 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Genel Kullanım" FontWeight="SemiBold" FontSize="15"/>
-                        <TextBlock Grid.Column="1" Text="{Binding KullanimYuzde, StringFormat={}%{0:N1} harcandı}" Foreground="#F9A825" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="1" Text="{Binding KullanimYuzde, StringFormat={}%{0:N1} harcandı}" Foreground="{DynamicResource AmberBrush}" FontWeight="SemiBold"/>
                     </Grid>
                     <ProgressBar Height="10" Margin="0,10,0,0" Minimum="0" Maximum="100"
-                                 Value="{Binding KullanimYuzde, Mode=OneWay}" Foreground="#F9A825" Background="#2A2F38"/>
+                                 Value="{Binding KullanimYuzde, Mode=OneWay}" Foreground="{DynamicResource AmberBrush}" Background="{DynamicResource ProgressTrackBrush}"/>
                 </StackPanel>
             </Border>
 
@@ -64,21 +64,21 @@
                                                     BorderBrush="#33FFFFFF" BorderThickness="1" VerticalAlignment="Center" Margin="0,0,6,0"/>
                                             <TextBlock FontWeight="SemiBold" FontSize="15">
                                                 <Run Text="{Binding Ad}"/>
-                                                <Run Text="{Binding Renk, StringFormat=· {0}}" Foreground="Gray" FontSize="12"/>
+                                                <Run Text="{Binding Renk, StringFormat=· {0}}" Foreground="{DynamicResource MutedTextBrush}" FontSize="12"/>
                                             </TextBlock>
                                         </StackPanel>
-                                        <TextBlock Foreground="Gray" FontSize="12" Margin="0,2,0,0">
+                                        <TextBlock Foreground="{DynamicResource MutedTextBrush}" FontSize="12" Margin="0,2,0,0">
                                             <Run Text="{Binding Marka}"/>
                                             <Run Text="{Binding Tedarikci, StringFormat=· {0}}"/>
                                         </TextBlock>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                                        <TextBlock Text="{Binding KalanGram, StringFormat={}{0:N0} g kaldı}" FontWeight="Bold" Foreground="#1565C0" HorizontalAlignment="Right"/>
-                                        <TextBlock Text="{Binding HarcananGram, StringFormat={}{0:N0} g harcandı}" FontSize="11" Foreground="Gray" HorizontalAlignment="Right"/>
+                                        <TextBlock Text="{Binding KalanGram, StringFormat={}{0:N0} g kaldı}" FontWeight="Bold" Foreground="{DynamicResource InfoBrush}" HorizontalAlignment="Right"/>
+                                        <TextBlock Text="{Binding HarcananGram, StringFormat={}{0:N0} g harcandı}" FontSize="11" Foreground="{DynamicResource MutedTextBrush}" HorizontalAlignment="Right"/>
                                     </StackPanel>
                                 </Grid>
                                 <ProgressBar Height="8" Margin="0,10,0,0" Minimum="0" Maximum="100"
-                                             Value="{Binding KullanimYuzde, Mode=OneWay}" Foreground="#F9A825" Background="#2A2F38"/>
+                                             Value="{Binding KullanimYuzde, Mode=OneWay}" Foreground="{DynamicResource AmberBrush}" Background="{DynamicResource ProgressTrackBrush}"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
@@ -146,8 +146,8 @@
                         </StackPanel>
                     </Grid>
 
-                    <Border Background="#E8F0FE" CornerRadius="8" Padding="12" Margin="0,0,0,16">
-                        <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#1565C0">
+                    <Border Background="{DynamicResource InfoPanelBrush}" CornerRadius="8" Padding="12" Margin="0,0,0,16">
+                        <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource InfoBrush}">
                             <Run Text="💡 " FontWeight="Bold"/>
                             <Run Text="Satış eklerken ürüne bağlı filament gramı otomatik olarak bu stoktan düşülür. Örn: 1 kg (1000 g) filament aldıysanız, her satışta kullanılan gram kadar kalan miktar azalır."/>
                         </TextBlock>
