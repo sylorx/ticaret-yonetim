@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
 using LiveChartsCore;
+using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using Microsoft.EntityFrameworkCore;
 using SkiaSharp;
 using TicaretYonetim.Data;
@@ -81,6 +83,12 @@ public class DashboardViewModel : ViewModelBase
 
     private SolidColorPaint? _etiketPaint;
     public SolidColorPaint? EtiketPaint { get => _etiketPaint; set => SetField(ref _etiketPaint, value); }
+
+    private SolidColorPaint? _tooltipZeminPaint;
+    public SolidColorPaint? TooltipZeminPaint { get => _tooltipZeminPaint; set => SetField(ref _tooltipZeminPaint, value); }
+
+    private SolidColorPaint? _tooltipMetinPaint;
+    public SolidColorPaint? TooltipMetinPaint { get => _tooltipMetinPaint; set => SetField(ref _tooltipMetinPaint, value); }
 
     private static SKColor EtiketRengi() =>
         ModernWpf.ThemeManager.Current.ApplicationTheme == ModernWpf.ApplicationTheme.Dark
@@ -174,34 +182,50 @@ public class DashboardViewModel : ViewModelBase
             {
                 Values = ciroListesi,
                 Name = "Ciro",
-                Fill = new SolidColorPaint(ciroRenk.WithAlpha(90)),
-                Stroke = new SolidColorPaint(ciroRenk) { StrokeThickness = 1 },
-                MaxBarWidth = 18,
-                Rx = 4,
-                Ry = 4
+                Fill = new LinearGradientPaint(
+                    new[] { SKColor.Parse("#81C784").WithAlpha(235), ciroRenk.WithAlpha(225), SKColor.Parse("#1B5E20").WithAlpha(205) },
+                    new SKPoint(0, 0), new SKPoint(0, 1)),
+                Stroke = null,
+                MaxBarWidth = 22,
+                Rx = 7,
+                Ry = 7,
+                YToolTipLabelFormatter = p => p.Coordinate.PrimaryValue.ToString("N0") + " ₺"
             },
             new LineSeries<double>
             {
                 Values = karListesi,
                 Name = "Kâr",
                 Fill = new LinearGradientPaint(
-                    new[] { karRenk.WithAlpha(70), karRenk.WithAlpha(0) },
+                    new[] { karRenk.WithAlpha(80), karRenk.WithAlpha(0) },
                     new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-                GeometrySize = 7,
+                GeometrySize = 9,
                 GeometryStroke = new SolidColorPaint(karRenk) { StrokeThickness = 2 },
+                GeometryFill = new SolidColorPaint(SKColor.Parse("#FFFFFF")),
                 Stroke = new SolidColorPaint(karRenk) { StrokeThickness = 3 },
-                LineSmoothness = 0.6
+                LineSmoothness = 1
             },
             new LineSeries<double>
             {
                 Values = adetListesi,
                 Name = "Satış Adedi",
                 Fill = null,
-                GeometrySize = 5,
-                Stroke = new SolidColorPaint(adetRenk) { StrokeThickness = 2 },
-                LineSmoothness = 0.6
+                GeometrySize = 6,
+                GeometryStroke = new SolidColorPaint(adetRenk) { StrokeThickness = 2 },
+                GeometryFill = new SolidColorPaint(SKColor.Parse("#FFFFFF")),
+                Stroke = new SolidColorPaint(adetRenk)
+                {
+                    StrokeThickness = 2,
+                    PathEffect = new DashEffect(new[] { 7f, 5f }, 0)
+                },
+                LineSmoothness = 1
             }
         };
+
+        var koyuMu = ModernWpf.ThemeManager.Current.ApplicationTheme == ModernWpf.ApplicationTheme.Dark;
+        var tTipZemin = koyuMu ? SKColor.Parse("#262E3A") : SKColor.Parse("#FFFFFF");
+        var tTipMetin = koyuMu ? SKColor.Parse("#F3F5F8") : SKColor.Parse("#111827");
+        TooltipZeminPaint = new SolidColorPaint(tTipZemin.WithAlpha(235)) { StrokeThickness = 0 };
+        TooltipMetinPaint = new SolidColorPaint(tTipMetin);
 
         KazancXEksen = new Axis[]
         {
@@ -210,7 +234,9 @@ public class DashboardViewModel : ViewModelBase
                 Labels = etiketler,
                 LabelsRotation = -35,
                 TextSize = 11,
-                LabelsPaint = new SolidColorPaint(EtiketRengi())
+                LabelsPaint = new SolidColorPaint(EtiketRengi()),
+                CrosshairPaint = new SolidColorPaint(SKColor.Parse("#552E7D32")) { StrokeThickness = 26 },
+                CrosshairSnapEnabled = true
             }
         };
 
@@ -222,7 +248,11 @@ public class DashboardViewModel : ViewModelBase
                 TextSize = 11,
                 MinStep = 1,
                 LabelsPaint = new SolidColorPaint(EtiketRengi()),
-                SeparatorsPaint = new SolidColorPaint(SKColor.Parse("#22808080")) { StrokeThickness = 1 }
+                SeparatorsPaint = new SolidColorPaint(SKColor.Parse("#22808080"))
+                {
+                    StrokeThickness = 1,
+                    PathEffect = new DashEffect(new[] { 4f, 4f }, 0)
+                }
             }
         };
 
@@ -230,18 +260,25 @@ public class DashboardViewModel : ViewModelBase
 
         var kanalRenkleri = new[]
         {
-            SKColor.Parse("#2E7D32"),
-            SKColor.Parse("#1565C0"),
-            SKColor.Parse("#F9A825"),
-            SKColor.Parse("#8E24AA")
+            (SKColor.Parse("#43A047"), SKColor.Parse("#1B5E20")),
+            (SKColor.Parse("#42A5F5"), SKColor.Parse("#1565C0")),
+            (SKColor.Parse("#FFCA28"), SKColor.Parse("#EF6C00")),
+            (SKColor.Parse("#AB47BC"), SKColor.Parse("#6A1B9A"))
         };
         var kanalListesi = gruplar.ToList();
         KanalSeries = kanalListesi.Select((g, i) => new PieSeries<double>
         {
             Values = new[] { (double)g.ToplamSatis },
             Name = $"{g.Kategori} ({g.ToplamSatis:N0} ₺)",
-            Fill = new SolidColorPaint(kanalRenkleri[i % kanalRenkleri.Length]),
-            InnerRadius = 55
+            Fill = new RadialGradientPaint(
+                kanalRenkleri[i % kanalRenkleri.Length].Item1,
+                kanalRenkleri[i % kanalRenkleri.Length].Item2),
+            InnerRadius = 62,
+            CornerRadius = 8,
+            Pushout = 14,
+            HoverPushout = 20,
+            Stroke = new SolidColorPaint(tTipZemin) { StrokeThickness = 2 },
+            ToolTipLabelFormatter = p => p.Coordinate.PrimaryValue.ToString("N0") + " ₺"
         }).ToArray();
     }
 }

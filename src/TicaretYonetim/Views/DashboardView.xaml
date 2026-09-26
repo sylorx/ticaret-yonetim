@@ -140,6 +140,8 @@
                     </Grid>
                     <lvc:CartesianChart Series="{Binding KazancSeries}" XAxes="{Binding KazancXEksen}" YAxes="{Binding KazancYEksen}"
                                         LegendTextPaint="{Binding EtiketPaint}"
+                                        TooltipBackgroundPaint="{Binding TooltipZeminPaint}" TooltipTextPaint="{Binding TooltipMetinPaint}"
+                                        AnimationsSpeed="00:00:00.450" TooltipPosition="Top"
                                         Height="300" LegendPosition="Top"/>
                 </StackPanel>
             </Border>
@@ -169,7 +171,9 @@
                 <Border Style="{StaticResource CardStyle}" Grid.Column="1">
                     <StackPanel>
                         <TextBlock Text="Satış Kanalı Dağılımı" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10"/>
-                        <lvc:PieChart Series="{Binding KanalSeries}" Height="200" LegendPosition="Bottom" LegendTextPaint="{Binding EtiketPaint}"/>
+                        <lvc:PieChart Series="{Binding KanalSeries}" Height="200" LegendPosition="Bottom" LegendTextPaint="{Binding EtiketPaint}"
+                                        TooltipBackgroundPaint="{Binding TooltipZeminPaint}" TooltipTextPaint="{Binding TooltipMetinPaint}"
+                                        AnimationsSpeed="00:00:00.450"/>
                         <ItemsControl ItemsSource="{Binding KanalOzeti}" Margin="0,8,0,0">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
