@@ -47,7 +47,7 @@ public class MainViewModel : ViewModelBase
         _mevcutGorunum = DashboardVM;
         NavigateCommand = new RelayCommand(p => Git(p as string ?? string.Empty));
         TemaDegistirCommand = new RelayCommand(() => KoyuTema = !KoyuTema);
-        Yenile();
+        DashboardVM.Yukle();
     }
 
     public void Yenile()

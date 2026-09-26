@@ -24,11 +24,13 @@ public class AlislarViewModel : ViewModelBase
 
     public RelayCommand EkleCommand { get; }
     public RelayCommand SilCommand { get; }
+    public RelayCommand FiltreTemizleCommand { get; }
 
     public AlislarViewModel()
     {
         EkleCommand = new RelayCommand(_ => Ekle());
         SilCommand = new RelayCommand(_ => Sil(), _ => Secili is not null);
+        FiltreTemizleCommand = new RelayCommand(_ => { _baslangic = null; _bitis = null; Bildir(nameof(Baslangic)); Bildir(nameof(Bitis)); Yukle(); });
     }
 
     private static Alis YeniKayit() => new() { Tarih = DateTime.Now, Miktar = 1 };

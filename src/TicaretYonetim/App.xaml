@@ -73,6 +73,7 @@
             </LinearGradientBrush>
             <DropShadowEffect x:Key="CardShadow" BlurRadius="18" ShadowDepth="2" Direction="270" Opacity="0.13" Color="#000000"/>
             <DropShadowEffect x:Key="AccentShadow" BlurRadius="16" ShadowDepth="3" Direction="270" Opacity="0.35" Color="#2E7D32"/>
+            <DropShadowEffect x:Key="Glow3DShadow" BlurRadius="30" ShadowDepth="7" Direction="285" Opacity="0.25" Color="#1B5E20"/>
 
             <Style TargetType="{x:Type Control}" x:Key="{x:Type Control}">
                 <Setter Property="FontFamily" Value="Segoe UI"/>
@@ -108,6 +109,69 @@
                         <Setter Property="BorderBrush" Value="{StaticResource AccentBrushLight}"/>
                     </Trigger>
                 </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Border" x:Key="Hero3DCardStyle" BasedOn="{StaticResource CardStyle}">
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="Effect" Value="{StaticResource Glow3DShadow}"/>
+                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <SkewTransform AngleX="-0.9" AngleY="0.35"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="Border" x:Key="Icon3DTile">
+                <Setter Property="Width" Value="54"/>
+                <Setter Property="Height" Value="54"/>
+                <Setter Property="CornerRadius" Value="15"/>
+                <Setter Property="Effect" Value="{StaticResource AccentShadow}"/>
+                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <RotateTransform Angle="-4"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="Border" x:Key="StatChip">
+                <Setter Property="Background" Value="{DynamicResource PillBackgroundBrush}"/>
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="Padding" Value="12,5"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <LinearGradientBrush x:Key="IconGreenBrush" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#43A047" Offset="0"/><GradientStop Color="#1B5E20" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="IconRedBrush" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#EF5350" Offset="0"/><GradientStop Color="#B71C1C" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="IconBlueBrush" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#42A5F5" Offset="0"/><GradientStop Color="#0D47A1" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="IconOrangeBrush" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FFA726" Offset="0"/><GradientStop Color="#E65100" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="IconPurpleBrush" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#AB47BC" Offset="0"/><GradientStop Color="#4A148C" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="IconTealBrush" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#26A69A" Offset="0"/><GradientStop Color="#004D40" Offset="1"/>
+            </LinearGradientBrush>
+
+            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="ui:ControlHelper.CornerRadius" Value="10"/>
+            </Style>
+            <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Setter Property="ui:ControlHelper.CornerRadius" Value="10"/>
+            </Style>
+            <Style TargetType="DatePicker" BasedOn="{StaticResource {x:Type DatePicker}}">
+                <Setter Property="ui:ControlHelper.CornerRadius" Value="10"/>
+            </Style>
+            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="ui:ControlHelper.CornerRadius" Value="10"/>
             </Style>
 
             <Style TargetType="Button" x:Key="AccentButtonStyle" BasedOn="{StaticResource {x:Type Button}}">
@@ -167,6 +231,10 @@
                 <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
                 <Setter Property="SelectionMode" Value="Single"/>
                 <Setter Property="SelectionUnit" Value="FullRow"/>
+                <Setter Property="EnableRowVirtualization" Value="True"/>
+                <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
+                <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling"/>
+                <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel"/>
                 <Setter Property="CanUserResizeRows" Value="False"/>
                 <Setter Property="CanUserAddRows" Value="False"/>
                 <Setter Property="FontSize" Value="13"/>

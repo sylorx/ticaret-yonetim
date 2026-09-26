@@ -52,6 +52,7 @@
                     <DatePicker SelectedDate="{Binding Baslangic}" Margin="0,0,20,0"/>
                     <TextBlock Text="Bitiş" VerticalAlignment="Center" Margin="0,0,8,0"/>
                     <DatePicker SelectedDate="{Binding Bitis}"/>
+                    <Button Content="✕ Temizle" Command="{Binding FiltreTemizleCommand}" Margin="16,0,0,0" Padding="10,4"/>
                 </StackPanel>
                 <DataGrid Style="{StaticResource ModernDataGridStyle}" ItemsSource="{Binding Alislar}" SelectedItem="{Binding Secili}" AutoGenerateColumns="False"
                           IsReadOnly="True" MaxHeight="420" GridLinesVisibility="None">

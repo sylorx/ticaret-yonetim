@@ -8,13 +8,13 @@
             <TextBlock Text="Genel Durum" Style="{StaticResource TitleText}"/>
 
             <UniformGrid Columns="3" Rows="1">
-                <Border Style="{StaticResource CardStyle}">
+                <Border Style="{StaticResource Hero3DCardStyle}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#2E7D32" VerticalAlignment="Center">
+                        <Border Style="{StaticResource Icon3DTile}" Background="{StaticResource IconGreenBrush}" VerticalAlignment="Center">
                             <TextBlock Text="💰" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
@@ -23,13 +23,13 @@
                         </StackPanel>
                     </Grid>
                 </Border>
-                <Border Style="{StaticResource CardStyle}">
+                <Border Style="{StaticResource Hero3DCardStyle}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#C62828" VerticalAlignment="Center">
+                        <Border Style="{StaticResource Icon3DTile}" Background="{StaticResource IconRedBrush}" VerticalAlignment="Center">
                             <TextBlock Text="🧾" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
@@ -38,13 +38,13 @@
                         </StackPanel>
                     </Grid>
                 </Border>
-                <Border Style="{StaticResource CardStyle}">
+                <Border Style="{StaticResource Hero3DCardStyle}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#1565C0" VerticalAlignment="Center">
+                        <Border Style="{StaticResource Icon3DTile}" Background="{StaticResource IconBlueBrush}" VerticalAlignment="Center">
                             <TextBlock Text="📈" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
@@ -56,13 +56,13 @@
             </UniformGrid>
 
             <UniformGrid Columns="3" Rows="1" Margin="0,4,0,0">
-                <Border Style="{StaticResource CardStyle}">
+                <Border Style="{StaticResource Hero3DCardStyle}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#EF6C00" VerticalAlignment="Center">
+                        <Border Style="{StaticResource Icon3DTile}" Background="{StaticResource IconOrangeBrush}" VerticalAlignment="Center">
                             <TextBlock Text="📅" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
@@ -71,13 +71,13 @@
                         </StackPanel>
                     </Grid>
                 </Border>
-                <Border Style="{StaticResource CardStyle}">
+                <Border Style="{StaticResource Hero3DCardStyle}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#6A1B9A" VerticalAlignment="Center">
+                        <Border Style="{StaticResource Icon3DTile}" Background="{StaticResource IconPurpleBrush}" VerticalAlignment="Center">
                             <TextBlock Text="🎯" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">
@@ -86,13 +86,13 @@
                         </StackPanel>
                     </Grid>
                 </Border>
-                <Border Style="{StaticResource CardStyle}">
+                <Border Style="{StaticResource Hero3DCardStyle}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Width="46" Height="46" CornerRadius="12" Background="#00897B" VerticalAlignment="Center">
+                        <Border Style="{StaticResource Icon3DTile}" Background="{StaticResource IconTealBrush}" VerticalAlignment="Center">
                             <TextBlock Text="🧵" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="14,0,0,0">

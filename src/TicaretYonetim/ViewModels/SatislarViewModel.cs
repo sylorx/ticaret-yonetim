@@ -81,12 +81,14 @@ public class SatislarViewModel : ViewModelBase
 
     public RelayCommand EkleCommand { get; }
     public RelayCommand SilCommand { get; }
+    public RelayCommand FiltreTemizleCommand { get; }
 
     public SatislarViewModel(UrunlerViewModel urunlerVm)
     {
         _urunlerVm = urunlerVm;
         EkleCommand = new RelayCommand(_ => Ekle());
         SilCommand = new RelayCommand(_ => Sil(), _ => Secili is not null);
+        FiltreTemizleCommand = new RelayCommand(_ => { _baslangic = null; _bitis = null; Bildir(nameof(Baslangic)); Bildir(nameof(Bitis)); Yukle(); });
     }
 
     private static Satis YeniKayit() => new() { Tarih = DateTime.Now, Adet = 1, Kanal = SatisKanali.Website };
