@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using TicaretYonetim.Data;
 using TicaretYonetim.Services;
 
@@ -22,5 +23,21 @@ public partial class App : Application
         db.SemaGuncelle();
 
         OllamaAyarlari.Yukle().Uygula();
+
+        OtoYedekAl();
+    }
+
+    private static void OtoYedekAl()
+    {
+        try
+        {
+            var yedekler = YedeklemeServisi.YedekleriListele();
+            var son = yedekler.FirstOrDefault();
+            if (son is null || (DateTime.Now - File.GetLastWriteTime(son)).TotalHours > 24)
+                YedeklemeServisi.YedekOlustur();
+        }
+        catch
+        {
+        }
     }
 }

@@ -12,6 +12,7 @@ public class MainViewModel : ViewModelBase
     public FilamentViewModel FilamentVM { get; } = new();
     public AsistanViewModel AsistanVM { get; } = new();
     public FiyatlandirmaViewModel FiyatlandirmaVM { get; } = new();
+    public YedeklemeViewModel YedeklemeVM { get; } = new();
 
     private object _mevcutGorunum;
     public object MevcutGorunum
@@ -104,6 +105,11 @@ public class MainViewModel : ViewModelBase
                 FiyatlandirmaVM.Yukle();
                 MevcutGorunum = FiyatlandirmaVM;
                 MevcutBaslik = "Fiyatlandırma / Maliyet";
+                break;
+            case "Yedekleme":
+                YedeklemeVM.Yukle();
+                MevcutGorunum = YedeklemeVM;
+                MevcutBaslik = "Yedekleme / Geri Yükleme";
                 break;
         }
     }

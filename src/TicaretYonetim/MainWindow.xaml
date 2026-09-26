@@ -36,6 +36,9 @@
         <DataTemplate DataType="{x:Type vm:FiyatlandirmaViewModel}">
             <views:FiyatlandirmaView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:YedeklemeViewModel}">
+            <views:YedeklemeView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Window.DataContext>
@@ -70,6 +73,8 @@
                              Command="{Binding NavigateCommand}" CommandParameter="Fiyatlandirma"/>
                 <RadioButton Style="{StaticResource NavButtonStyle}" Content="🤖  Asistan"
                              Command="{Binding NavigateCommand}" CommandParameter="Asistan"/>
+                <RadioButton Style="{StaticResource NavButtonStyle}" Content="💾  Yedekleme"
+                             Command="{Binding NavigateCommand}" CommandParameter="Yedekleme"/>
             </StackPanel>
 
             <Button Content="🌗  Açık / Koyu Tema"
