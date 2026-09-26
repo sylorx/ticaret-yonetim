@@ -141,11 +141,37 @@
                                             Background="{DynamicResource CardBackgroundBrush}" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1"
                                             HorizontalAlignment="Left" Effect="{StaticResource CardShadow}">
                                         <StackPanel>
-                                            <TextBlock FontSize="11" Foreground="{DynamicResource MutedTextBrush}" FontWeight="SemiBold" Margin="0,0,0,4">
-                                                <Run Text="🤖 Asistan"/>
-                                                <Run Text="{Binding Tarih, StringFormat=· {0:HH:mm}}" Foreground="{DynamicResource MutedTextBrush}"/>
-                                            </TextBlock>
-                                            <TextBlock Text="{Binding Icerik}" TextWrapping="Wrap" FontSize="14"/>
+                                            <Grid Margin="0,0,0,4">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock FontSize="11" Foreground="{DynamicResource MutedTextBrush}" FontWeight="SemiBold" VerticalAlignment="Center">
+                                                    <Run Text="🤖 Asistan"/>
+                                                    <Run Text="{Binding Tarih, StringFormat=· {0:HH:mm}}" Foreground="{DynamicResource MutedTextBrush}"/>
+                                                </TextBlock>
+                                                <Button Grid.Column="1" Click="Kopyala_Click" Tag="{Binding Icerik}" ToolTip="Mesajı kopyala"
+                                                        Background="Transparent" BorderThickness="0" Padding="6,2" Cursor="Hand"
+                                                        FontSize="11" Foreground="{DynamicResource MutedTextBrush}">
+                                                    <Button.Style>
+                                                        <Style TargetType="Button">
+                                                            <Setter Property="Background" Value="Transparent"/>
+                                                            <Setter Property="BorderThickness" Value="0"/>
+                                                            <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Foreground" Value="{DynamicResource SuccessBrush}"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                    <TextBlock Text="📋 Kopyala" FontSize="11"/>
+                                                </Button>
+                                            </Grid>
+                                            <TextBox x:Name="BalonMetni" Text="{Binding Icerik}" IsReadOnly="True" TextWrapping="Wrap"
+                                                     FontSize="14" BorderThickness="0" Background="Transparent" Padding="0"
+                                                     IsInactiveSelectionHighlightEnabled="True" FocusVisualStyle="{x:Null}"
+                                                     VerticalContentAlignment="Top" VerticalScrollBarVisibility="Disabled"/>
                                         </StackPanel>
                                     </Border>
                                 </Grid>
@@ -157,6 +183,8 @@
                                         <Setter TargetName="Balon" Property="BorderBrush" Value="{StaticResource AccentGradientBrush}"/>
                                         <Setter TargetName="Balon" Property="Effect" Value="{StaticResource AccentShadow}"/>
                                         <Setter TargetName="Balon" Property="TextElement.Foreground" Value="White"/>
+                                        <Setter TargetName="BalonMetni" Property="Foreground" Value="White"/>
+                                        <Setter TargetName="BalonMetni" Property="SelectionBrush" Value="#66FFFFFF"/>
                                     </DataTrigger>
                                 </DataTemplate.Triggers>
                             </DataTemplate>
